@@ -1,27 +1,42 @@
-{% url 'register' as regi %}
 {% url 'index' as ind %}
+{% url 'login' as lg %}
+{% url 'cerrar' as lgt %}
 
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+
+  <nav class="navbar bg-body-tertiary fixed-top">
     <div class="container-fluid">
-      <a class="navbar-brand" href="{% url 'index' %}"><i class="fa-regular fa-lemon fa-2xl"></i></a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+      <a class="navbar-brand" href="{% url 'index' %}"><i class="fa-regular fa-lemon fa-2xl"></i> Entre Letras y Pensamientos </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarText">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Post</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'register' %}">Registrarse</a>
-          </li>
-        </ul>
-        <span class="navbar-text">
-          <a href=""><i class="fa-solid fa-right-to-bracket fa-flip-vertical fa-2xl"></i></i></a>
-        </span>
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Actions</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+            {% if not user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{% url 'login' %}"> <i class="fa-solid fa-lock-open"></i> Login</a>
+            </li>
+            {% endif %}
+
+            {% if user.is_authenticated %}
+
+            <li class="nav-item"></li>
+              <a class="nav-link active" aria-current="page" href="#"> <i class="fa-solid fa-user"></i> Profile</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{% url 'logout' %}"> <i class="fa-solid fa-arrow-right"></i> Logout</a>
+            </li>
+            {% endif %}
+          </ul>
+        </div>
       </div>
     </div>
   </nav>
+
+
+

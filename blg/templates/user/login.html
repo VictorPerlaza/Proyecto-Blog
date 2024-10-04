@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block js %}
+
+
+{% endblock %}
+
+{% block content %}
+
+
+
+<div class="container">
+    
+    <h2>Login</h2>
+
+
+
+    <!-- Formulario de login -->
+    <form method="post">
+        {% csrf_token %}  <!-- Protección contra ataques CSRF -->
+        {{ form.as_p }}   <!-- Muestra el formulario con los campos renderizados como párrafos -->
+        <button type="submit">Login</button>  <!-- Botón para enviar el formulario -->
+    </form>
+
+    <!-- Link a la página principal (o cualquier otra página) -->
+    <p><a href="{% url 'index' %}">Volver a la página principal</a></p>
+    
+
+</div>
+
+
+
+ 
+
+
+
+
+{% endblock %}

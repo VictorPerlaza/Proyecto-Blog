@@ -6,9 +6,10 @@ from django.contrib.auth import authenticate
 from django.shortcuts import redirect 
 from django.contrib import messages
 from django.contrib.auth import logout
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User 
 from django.contrib.auth.decorators import login_required
-
+from blg.models import Author
+from django.contrib.auth.forms import AuthenticationForm
 
 # Create your views here.
 
@@ -20,25 +21,70 @@ def post_detail(request, id):
     pass
 
 
+def login(request):
+    # Verifica si la solicitud es de tipo POST (cuando el usuario envía el formulario)
+    if request.method == 'POST':
+        # Crea una instancia del formulario de autenticación con los datos del POST
+        form = AuthenticationForm(request, data=request.POST)
+        
+        # Valida si el formulario es correcto (credenciales válidas)
+        if form.is_valid():
+            # Obtiene los datos de usuario del formulario
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            
+            # Autentica al usuario con el método authenticate de Django
+            user = authenticate(request, username=username, password=password)
+            
+            # Si el usuario es autenticado correctamente
+            if user is not None:
+                # Inicia sesión con el método login
+                lg(request, user)
+                # Redirige al usuario a la página de inicio (o a otra página que desees)
+                return redirect('index')
+            else:
+                # Si no se encuentra al usuario, agrega un mensaje de error
+                messages.error(request, 'Usuario o contraseña incorrectos.')
+        else:
+            # Si el formulario no es válido, agrega un mensaje de error
+            messages.error(request, 'Datos inválidos.')
+    
+    # Si la solicitud es GET (el usuario simplemente visita la página), muestra el formulario
+    else:
+        form = AuthenticationForm()
+
+    # Renderiza la página de login con el formulario
+    return render(request, 'user/login.html', {'form': form})
+
 def register(request):
-   if request.method == 'POST':
-    username = request.POST.get('nombre')
-    email = request.POST.get('correo')
-    password = request.POST.get('contra')
+    if request.method == 'POST':
+        # Capturar los campos del formulario
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        bio = request.POST.get('bio')  
 
-    if User.objects.filter(username=username).exists():
-        messages.error(request, f'{username} ya existe en nuestra database')
-        return redirect('register')
-       
-    if User.objects.filter(email=email).exists():
-        messages.error(request, f'{email} ya existe en nuestra database')
-        return redirect('register')
+        # Verificación si el nombre de usuario o email ya existen
+        if User.objects.filter(username=username).exists():
+            messages.error(request, f'{username} ya existe en nuestra base de datos')
+            return redirect('register')
 
-    usuario = User.objects.create_user(username, email, password)
+        if User.objects.filter(email=email).exists():
+            messages.error(request, f'{email} ya existe en nuestra base de datos')
+            return redirect('register')
 
-    if usuario :
-       lg(request,usuario)
-       messages.success(request, f'Bienvenido {username}')
-       return redirect('juegos')
+        # Crear el usuario
+        usuario = User.objects.create_user(username=username, email=email, password=password)
 
-   return render(request, 'user/register.html', {})
+        # Crear el perfil de autor asociado, con la biografía
+        Author.objects.create(user=usuario, bio=bio)
+
+        messages.success(request, f'Usuario {username} creado correctamente')
+
+    return render(request, 'user/register.html', {})
+
+
+
+def cerrar(request):
+    logout(request)  # Cierra la sesión del usuario
+    return redirect('index')  # Redirige al usuario a la página de login después de cerrar sesión
