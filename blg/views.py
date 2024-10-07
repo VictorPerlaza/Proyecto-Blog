@@ -14,7 +14,11 @@ from .forms import UserProfileForm , AuthorProfileForm
 # Create your views here.
 
 def index(request):
-    return render(request, 'index.html')  
+    # Verificar si el usuario está autenticado
+    if request.user.is_authenticated:
+        # Agregar un mensaje de bienvenida con el nombre del usuario
+        messages.info(request, f"¡Bienvenido, {request.user.username}!")
+    return render(request, 'index.html')
 
 def post_detail(request, id):
     # Lógica para obtener el post por id y renderizar la plantilla
@@ -22,25 +26,25 @@ def post_detail(request, id):
 
 
 def login(request):
-    # Verifica si la solicitud es de tipo POST (cuando el usuario envía el formulario)
+    # Verificar si la solicitud es de tipo POST (cuando el usuario envía el formulario)
     if request.method == 'POST':
         # Crea una instancia del formulario de autenticación con los datos del POST
         form = AuthenticationForm(request, data=request.POST)
         
-        # Valida si el formulario es correcto (credenciales válidas)
+        # Validar si el formulario es correcto (credenciales válidas)
         if form.is_valid():
-            # Obtiene los datos de usuario del formulario
+            # Obtener los datos de usuario del formulario
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password') 
             
-            # Autentica al usuario con el método authenticate de Django
+            # Autenticar el usuario con el método 
             user = authenticate(request, username=username, password=password)
             
             # Si el usuario es autenticado correctamente
             if user is not None:
                 # Inicia sesión con el método login
                 lg(request, user)
-                # Redirige al usuario a la página de inicio (o a otra página que desees)
+                # Redirige al usuario a la página de inicio 
                 return redirect('index')
             else:
                 # Si no se encuentra al usuario, agrega un mensaje de error
@@ -79,7 +83,10 @@ def register(request):
         # Crear el perfil de autor asociado, con la biografía
         Author.objects.create(user=usuario, bio=bio)
 
-        messages.success(request, f'Usuario {username} creado correctamente')
+        messages.success(request, 'Usuario creado correctamente')
+        
+        # Redirigir al usuario a la página de inicio de sesión
+        return redirect('login')  
 
     return render(request, 'user/register.html', {})
 
@@ -105,5 +112,8 @@ def profile(request):
 
 
 def cerrar(request):
-    logout(request)  # Cierra la sesión del usuario
-    return redirect('index')  # Redirige al usuario a la página de login después de cerrar sesión
+    if request.user.is_authenticated:
+        # mensaje de despedida
+        messages.info(request, f"¡Hasta luego, {request.user.username}! Has cerrado sesión.")
+        logout(request)  # Cierra la sesión del usuario
+    return redirect('index')  # Redirige al usuario a la página de inicio
