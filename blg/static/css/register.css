@@ -1,14 +1,13 @@
-/* Contenedor principal */
+/* Asegúrate de que esto esté en tu archivo CSS que se carga */
 .container {
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Centra verticalmente */
-    align-items: center; /* Centra horizontalmente */
+    justify-content: center; /* Centrar verticalmente */
+    align-items: center; /* Centrar horizontalmente */
     height: 100vh; /* Ocupa toda la altura de la ventana */
     padding: 20px; /* Espacio interno */
 }
 
-/* Estilo del formulario */
 form {
     background-color: #fff; /* Fondo blanco para el formulario */
     padding: 20px; /* Espacio interno del formulario */
@@ -28,26 +27,10 @@ label {
 }
 
 /* Estilo del botón */
-button {
+.btn {
     width: 100%; /* Ancho completo del botón */
     padding: 10px; /* Padding del botón */
-    background-color: #007bff; /* Color de fondo */
-    color: white; /* Color del texto */
-    border: none; /* Sin borde */
+    font-size: 16px; /* Tamaño de la fuente */
     border-radius: 5px; /* Bordes redondeados */
-    cursor: pointer; /* Cursor de mano al pasar por encima */
-}
-
-button:hover {
-    background-color: #0056b3; /* Color de fondo al pasar el ratón */
-}
-
-/* Estilo para el enlace */
-p a {
-    color: #007bff;
-    text-decoration: none;
-}
-
-p a:hover {
-    text-decoration: underline; /* Subrayado al pasar el ratón */
+    cursor: pointer; /* Cambia el cursor al pasar por encima */
 }
