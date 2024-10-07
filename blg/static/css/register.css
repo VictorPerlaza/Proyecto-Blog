@@ -4,7 +4,7 @@
     flex-direction: column;
     justify-content: center; /* Centrar verticalmente */
     align-items: center; /* Centrar horizontalmente */
-    height: 100vh; /* Ocupa toda la altura de la ventana */
+    height: 110vh; /* Ocupa toda la altura de la ventana */
     padding: 20px; /* Espacio interno */
 }
 
