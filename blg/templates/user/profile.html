@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/profile.css' %}">
+
+<div class="form-container">
+    <h2>Editar Perfil</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="username">Username</label>
+            <input type="text" name="username" id="username" value="{{ user_form.username.value|default:user.username }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" value="{{ user_form.email.value|default:user.email }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="first_name">Password</label>
+            <input type="text" name="first_name" id="first_name" value="{{ user_form.first_name.value|default:user.first_name }}">
+        </div>
+        <div class="mb-3">
+            <label for="last_name">Last Name</label>
+            <input type="text" name="last_name" id="last_name" value="{{ user_form.last_name.value|default:user.last_name }}">
+        </div>
+        <div class="mb-3">
+            <label for="bio">Biography</label>
+            <textarea name="bio" id="bio" rows="4">{{ author_form.bio.value|default:user.author.bio }}</textarea>
+        </div>
+        <button type="submit" class="btn">Actualizar</button>
+    </form>
+
+    <p><a href="{% url 'index' %}">Volver a la página principal</a></p>
+</div>
+{% endblock %}

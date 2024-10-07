@@ -10,7 +10,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from blg.models import Author
 from django.contrib.auth.forms import AuthenticationForm
-
+from .forms import UserProfileForm , AuthorProfileForm
 # Create your views here.
 
 def index(request):
@@ -31,7 +31,7 @@ def login(request):
         if form.is_valid():
             # Obtiene los datos de usuario del formulario
             username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
+            password = form.cleaned_data.get('password') 
             
             # Autentica al usuario con el método authenticate de Django
             user = authenticate(request, username=username, password=password)
@@ -83,6 +83,25 @@ def register(request):
 
     return render(request, 'user/register.html', {})
 
+
+def profile(request):
+    if request.method == 'POST':
+        user_form = UserProfileForm(request.POST, instance=request.user)
+        author_form = AuthorProfileForm(request.POST, instance=request.user.author)
+
+        if user_form.is_valid() and author_form.is_valid():
+            user_form.save()
+            author_form.save()
+            return redirect('index')  # Redirige después de guardar
+
+    else:
+        user_form = UserProfileForm(instance=request.user)
+        author_form = AuthorProfileForm(instance=request.user.author)
+
+    return render(request, 'user/profile.html', {
+        'user_form': user_form,
+        'author_form': author_form,
+    })
 
 
 def cerrar(request):
