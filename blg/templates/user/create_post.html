@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" type="text/css" href="../../static/css/post.css">
+
+
+<main>
+    <h2>Crear un Nuevo Post</h2>
+    <form method="POST" enctype="multipart/form-data" class="post-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn-submit">Publicar</button>
+    </form>
+</main>
+
+<script>
+    // Añadir la clase "form-control" a todos los inputs y selects del formulario
+    document.querySelectorAll('.post-form input, .post-form select, .post-form textarea').forEach(function(element) {
+        element.classList.add('form-control');
+    });
+</script>
+
+
+
+
+{% endblock %}

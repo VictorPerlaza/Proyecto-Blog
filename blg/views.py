@@ -8,17 +8,22 @@ from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.models import User 
 from django.contrib.auth.decorators import login_required
-from blg.models import Author
+from blg.models import Author , Post
 from django.contrib.auth.forms import AuthenticationForm
-from .forms import UserProfileForm , AuthorProfileForm
+from .forms import UserProfileForm , AuthorProfileForm , PostForm
+
+
 # Create your views here.
 
 def index(request):
+    recent_posts = Post.objects.filter(published=True).order_by('-created_at')[:5]
+    
     # Verificar si el usuario está autenticado
     if request.user.is_authenticated:
         # Agregar un mensaje de bienvenida con el nombre del usuario
         messages.info(request, f"¡Bienvenido, {request.user.username}!")
-    return render(request, 'index.html')
+    
+    return render(request, 'index.html', {'recent_posts': recent_posts})
 
 def post_detail(request, id):
     # Lógica para obtener el post por id y renderizar la plantilla
@@ -109,6 +114,19 @@ def profile(request):
         'user_form': user_form,
         'author_form': author_form,
     })
+
+
+def create_post(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user  # Asignar el autor al usuario actual
+            post.save()
+            return redirect('home')  # Redirigir a la página principal después de crear el post
+    else:
+        form = PostForm()
+    return render(request, 'user/create_post.html', {'form': form})
 
 
 def cerrar(request):

@@ -1,0 +1,38 @@
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1; /* Esto permite que el main ocupe todo el espacio disponible */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centra el contenido verticalmente */
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    width: 100%;
+    margin-top: auto; /* Asegura que el footer esté siempre al fondo */
+}
+
+.form-control {
+    width: 100%; /* Asegúrate de que el formulario ocupe el 100% */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* Esto evita que el padding afecte el ancho total */
+}
+
+.btn-submit {
+    margin-top: 10px; /* Añade un margen superior para separar el botón del formulario */
+}
