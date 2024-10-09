@@ -16,14 +16,14 @@ from .forms import UserProfileForm , AuthorProfileForm , PostForm
 # Create your views here.
 
 def index(request):
-    recent_posts = Post.objects.filter(published=True).order_by('-created_at')[:5]
+    recent_posts = Post.objects.filter(published=True).order_by('-created_at')[:6]
     
-    # Verificar si el usuario está autenticado
     if request.user.is_authenticated:
-        # Agregar un mensaje de bienvenida con el nombre del usuario
         messages.info(request, f"¡Bienvenido, {request.user.username}!")
     
+    print(recent_posts)  # Verifica si hay posts capturados
     return render(request, 'index.html', {'recent_posts': recent_posts})
+
 
 def post_detail(request, id):
     # Lógica para obtener el post por id y renderizar la plantilla
