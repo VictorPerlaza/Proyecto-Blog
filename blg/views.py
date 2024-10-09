@@ -116,17 +116,23 @@ def profile(request):
     })
 
 
+from django.shortcuts import get_object_or_404
+
 def create_post(request):
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             post = form.save(commit=False)
-            post.author = request.user  # Asignar el autor al usuario actual
+            # Obtener el objeto Author correspondiente al usuario actual
+            author = get_object_or_404(Author, user=request.user)
+            post.author = author  # Asignar la instancia de Author
             post.save()
-            return redirect('home')  # Redirigir a la página principal después de crear el post
+            return redirect('index')  # Redirigir a la página principal después de crear el post
     else:
         form = PostForm()
+    
     return render(request, 'user/create_post.html', {'form': form})
+
 
 
 def cerrar(request):
