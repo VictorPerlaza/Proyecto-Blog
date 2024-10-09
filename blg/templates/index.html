@@ -4,40 +4,38 @@
 
 {% block content %}
 
-<link rel="stylesheet" type="text/css" href="../static/css/index.css">
+</div>
+
+<link rel="stylesheet" type="text/css" href="../../static/css/index.css">
 
 <div class="container">
 
-<section class="banner">
-    {% if user.is_authenticated %}
-    <a href="{% url 'create_post' %}">Crear un nuevo post</a>
-    {% endif %}
-</section>
+    <section class="banner">
+        {% if user.is_authenticated %}
+        <a href="{% url 'create_post' %}" class="btn-create-post">Crear un nuevo post</a>
+        {% endif %}
+    </section>
 
-<main>
-    <h2>Posts Recientes</h2>
-    <div class="posts">
-        {% for post in recent_posts %}
-        <article class="post" style="opacity: 0; transform: translateY(20px);">
-            {% if post.image %}
-            <img src="{{ post.image.url }}" alt="{{ post.title }}">
-            {% endif %}
-            <h3><a href="#">{{ post.title }}</a></h3>
-            <p class="fecha">Publicado el {{ post.created_at|date:"d M Y" }}</p>
-            <p>{{ post.content|truncatewords:20 }}</p>
-            <a href="#" class="leer-mas">Leer más</a>
-        </article>
-        {% empty %}
-        <p>No hay posts recientes.</p>
-        {% endfor %}
-    </div>
-</main>
-
-
+    <main>
+        <h2>Posts Recientes</h2>
+        <div class="posts">
+            {% for post in recent_posts %}
+            <article class="post" style="opacity: 0; transform: translateY(20px);">
+                {% if post.image %}
+                <img src="{{ post.image.url }}" alt="{{ post.title }}">
+                {% endif %}
+                <h3><a href="#">{{ post.title }}</a></h3>
+                <p class="fecha">Publicado el {{ post.created_at|date:"d M Y" }}</p>
+                <p>{{ post.content|truncatewords:20 }}</p>
+                <a href="#" class="leer-mas">Leer más</a>
+            </article>
+            {% empty %}
+            <p>No hay posts recientes.</p>
+            {% endfor %}
+        </div>
+    </main>
 
 </div>
-
-
 
  
 

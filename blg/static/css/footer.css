@@ -1,38 +1,61 @@
+/* Asegura que el body ocupe toda la altura de la pantalla */
 html, body {
     height: 100%;
     margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
+/* Estilo general del body */
 body {
     display: flex;
     flex-direction: column;
+    justify-content: space-between; /* Asegura que el footer quede al fondo */
+    min-height: 100vh; /* El body ocupará toda la altura de la ventana */
 }
 
+/* El main ocupará el espacio restante */
 main {
-    flex: 1; /* Esto permite que el main ocupe todo el espacio disponible */
+    flex: 1;
     padding: 20px;
     display: flex;
     flex-direction: column;
     justify-content: center; /* Centra el contenido verticalmente */
 }
 
+/* Estilo del footer */
 footer {
     background-color: #333;
     color: white;
     text-align: center;
     padding: 10px 0;
     width: 100%;
-    margin-top: auto; /* Asegura que el footer esté siempre al fondo */
+    margin-top: auto; /* Asegura que el footer siempre esté al fondo */
+    position: relative; /* No interfiere con el contenido de la página */
+    z-index: 1; /* Asegura que esté por encima de otros elementos si es necesario */
 }
 
+/* Estilo de los formularios */
 .form-control {
-    width: 100%; /* Asegúrate de que el formulario ocupe el 100% */
+    width: 100%; /* El formulario ocupará todo el ancho disponible */
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    box-sizing: border-box; /* Esto evita que el padding afecte el ancho total */
+    box-sizing: border-box; /* Evita que el padding afecte el ancho */
+    margin-bottom: 10px; /* Añade un margen inferior para separar los elementos */
 }
 
 .btn-submit {
     margin-top: 10px; /* Añade un margen superior para separar el botón del formulario */
+    padding: 10px 20px; /* Añade padding al botón para hacerlo más grande */
+    background-color: #28a745; /* Color de fondo del botón */
+    color: white; /* Color del texto del botón */
+    border: none; /* Elimina el borde del botón */
+    border-radius: 4px; /* Bordes redondeados */
+    cursor: pointer; /* Cambia el cursor cuando pasas sobre el botón */
+}
+
+/* Estilo del botón cuando se pasa el cursor encima */
+.btn-submit:hover {
+    background-color: #218838; /* Cambia el color del botón al hacer hover */
 }

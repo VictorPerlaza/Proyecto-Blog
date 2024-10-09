@@ -1,7 +1,8 @@
 .post-form {
-    max-width: 600px;
-    margin: 20px auto;
-    padding: 20px;
+    width: 100%; /* Ocupa todo el ancho de su contenedor */
+    max-width: 1200px; /* Aumenta significativamente el ancho máximo del formulario */
+    margin: 40px auto;
+    padding: 30px;
     border: 1px solid #ccc;
     border-radius: 8px;
     background-color: #f9f9f9;
@@ -9,7 +10,7 @@
 }
 
 .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
 label {
@@ -19,29 +20,31 @@ label {
 }
 
 .form-control {
-    width: 100%;
-    padding: 10px;
+    width: 100%; /* Asegura que los campos ocupen todo el ancho del formulario */
+    padding: 15px; /* Aumenta el padding de los campos */
+    font-size: 16px; /* Aumenta el tamaño de la fuente para hacer los campos más visibles */
     border: 1px solid #ccc;
     border-radius: 4px;
-    box-sizing: border-box; /* Asegura que el padding no afecte el ancho total */
+    box-sizing: border-box;
 }
 
 .form-control:focus {
-    border-color: #007BFF; /* Color de borde al enfocar */
-    outline: none; /* Elimina el contorno predeterminado */
+    border-color: #007BFF;
+    outline: none;
 }
 
 .btn-submit {
     background-color: #007BFF;
     color: white;
     border: none;
-    padding: 10px 15px;
+    padding: 12px 20px;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 18px;
     transition: background-color 0.3s;
+    width: 100%; /* Hace que el botón ocupe el ancho completo del formulario */
 }
 
 .btn-submit:hover {
-    background-color: #0056b3; /* Color más oscuro al pasar el mouse */
+    background-color: #0056b3;
 }

@@ -40,16 +40,37 @@ input[type="text"] {
 .banner {
     background-image: url('banner.jpg');
     color: white;
-    text-align: center;
-    padding: 50px 0;
+    display: flex; /* Usamos flexbox para alinear elementos */
+    justify-content: flex-start; /* Alinea el contenido a la izquierda */
+    align-items: center; /* Alinea verticalmente el contenido */
+    padding: 50px 20px; /* Espaciado en el banner */
+    border-bottom: 1px solid #ccc; /* Línea debajo del banner */
+    margin-top: 20px; /* Añadir margen superior para separarlo del navbar */
+}
+
+.btn-create-post {
+    background-color: #007BFF; /* Color de fondo del botón */
+    color: white; /* Color del texto */
+    padding: 10px 15px; /* Espaciado interno */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    text-decoration: none; /* Sin subrayado */
+    font-size: 16px; /* Tamaño de la fuente */
+    transition: background-color 0.3s; /* Transición de color */
+    margin-left: 20px; /* Margen a la izquierda para separarlo del borde */
+}
+
+.btn-create-post:hover {
+    background-color: #0056b3; /* Color más oscuro al pasar el mouse */
 }
 
 main {
     padding: 20px;
+    margin-top: 20px; /* Añadir margen superior para separar del banner */
 }
 
 h2 {
-    margin-top: 0;
+    margin-top: 40px; /* Aumentar el margen superior para que no esté tan cerca del banner */
 }
 
 .posts {

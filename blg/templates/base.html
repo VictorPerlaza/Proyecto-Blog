@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% include 'layouts/nav.html' %}
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,13 +16,13 @@
     {% block css %}
 
     {% endblock %}
- 
+    
 <title>Document</title>
 </head>
 <body>
 
 
-  {% include 'layouts/nav.html' %}
+ 
 
 
 
@@ -51,7 +52,7 @@
     </div>
 {% endif %}
 
-
+{% include 'layouts/footer.html' %}
 
 </body>
 <script src="../static/js/message.js"></script>
