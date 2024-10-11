@@ -1,16 +1,16 @@
-from django.shortcuts import render
 from django.http import HttpResponse
-from django.shortcuts import render
-from django.contrib.auth import login as lg
-from django.contrib.auth import authenticate
-from django.shortcuts import redirect 
+from django.shortcuts import render , get_object_or_404 , redirect
+from django.contrib.auth import login as lg , logout , authenticate
 from django.contrib import messages
-from django.contrib.auth import logout
 from django.contrib.auth.models import User 
 from django.contrib.auth.decorators import login_required
-from blg.models import Author , Post
+from django.views.generic import DetailView
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import UserProfileForm , AuthorProfileForm , PostForm
+from django.views.generic import DetailView
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from .models import Post, Comment, Author
 
 
 # Create your views here.
@@ -116,7 +116,7 @@ def profile(request):
     })
 
 
-from django.shortcuts import get_object_or_404
+
 
 def create_post(request):
     if request.method == 'POST':
@@ -132,6 +132,30 @@ def create_post(request):
         form = PostForm()
     
     return render(request, 'user/create_post.html', {'form': form})
+
+
+
+class PostDetailView(DetailView):
+    model = Post
+    template_name = 'user/post_detail.html'
+    context_object_name = 'post'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['comments'] = self.object.comments.filter(approved=True)
+        return context
+
+    def post(self, request, *args, **kwargs):
+        # Verifica si el usuario está autenticado antes de procesar el comentario
+        if not request.user.is_authenticated:
+            return redirect('login')  # Redirige al inicio de sesión si no está autenticado
+        
+        post = self.get_object()
+        content = request.POST.get('content')
+        author = Author.objects.get(user=request.user)
+        Comment.objects.create(post=post, author=author, content=content)
+        return redirect(self.request.path)
+
 
 
 

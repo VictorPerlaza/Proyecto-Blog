@@ -27,7 +27,7 @@
                 <h3><a href="#">{{ post.title }}</a></h3>
                 <p class="fecha">Publicado el {{ post.created_at|date:"d M Y" }}</p>
                 <p>{{ post.content|truncatewords:20 }}</p>
-                <a href="#" class="leer-mas">Leer más</a>
+                <a href="{% url 'post_detail' post.pk %}" class="leer-mas">Leer más</a>
             </article>
             {% empty %}
             <p>No hay posts recientes.</p>
@@ -35,6 +35,8 @@
             
         </div>
     </main>
+
+    
 
 </div>
 

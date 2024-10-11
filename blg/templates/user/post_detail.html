@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+
+    <title>{{ post.title }}</title>
+    <link rel="stylesheet" href="../../static/css/post_detail.css">  <!-- Asegúrate de que la ruta sea correcta -->
+
+    <div class="container">
+        <h1>{{ post.title }}</h1>
+        
+        {% if post.image %}
+            <img src="{{ post.image.url }}" alt="Imagen de {{ post.title }}">
+        {% endif %}
+        
+        <p>{{ post.content }}</p>
+        <p><strong>Autor:</strong> {{ post.author.user.username }}</p>
+        <p><strong>Categoría:</strong> {{ post.category.name }}</p>
+        <p><strong>Tags:</strong> {{ post.tags.all|join:", " }}</p>
+
+        <div class="comments-section">
+            <h2>Comentarios</h2>
+            <ul>
+                {% for comment in comments %}
+                    <li>
+                        <span class="comment-author">{{ comment.author.user.username }}</span>
+                        <span class="comment-date">Publicado el {{ comment.created_at }}</span>
+                        <div class="comment-content">{{ comment.content }}</div>
+                    </li>
+                {% empty %}
+                    <li>No hay comentarios aún.</li>
+                {% endfor %}
+            </ul>
+
+            {% if user.is_authenticated %}
+                <h3>Deja un comentario:</h3>
+                <form method="post">
+                    {% csrf_token %}
+                    <textarea name="content" placeholder="Tu comentario" required></textarea>
+                    <button type="submit">Enviar</button>
+                </form>
+            {% else %}
+                <p>Para dejar un comentario, <a href="{% url 'login' %}">inicia sesión</a>.</p>
+            {% endif %}
+        </div>
+    </div>
+
+
+
+
+{% endblock %}

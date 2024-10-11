@@ -84,12 +84,21 @@ h2 {
     margin: 10px;
     padding: 10px;
     width: calc(33% - 40px);
+    display: flex;
+    flex-direction: column; /* Permite alinear los elementos en columna */
+    height: 400px; /* Ajusta según lo necesites */
+    overflow: hidden; /* Asegúrate de ocultar el contenido desbordado */
 }
 
+
 .post img {
-    max-width: 100%;
-    border-radius: 5px;
+    width: 100%; /* Asegura que la imagen ocupe todo el ancho del contenedor */
+    height: auto; /* Mantiene la relación de aspecto */
+    max-height: 200px; /* Puedes ajustar este valor al tamaño deseado */
+    object-fit: cover; /* Asegura que la imagen se recorte adecuadamente */
+    border-radius: 5px; /* Para mantener el estilo redondeado */
 }
+
 
 .leer-mas {
     display: inline-block;
