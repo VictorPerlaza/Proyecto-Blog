@@ -2,10 +2,8 @@
 {% load static %}
 
 {% block content %}
-
-
     <title>{{ post.title }}</title>
-    <link rel="stylesheet" href="../../static/css/post_detail.css">  <!-- Asegúrate de que la ruta sea correcta -->
+    <link rel="stylesheet" href="{% static 'css/post_detail.css' %}">  <!-- Usa la etiqueta static para la ruta -->
 
     <div class="container">
         <h1>{{ post.title }}</h1>
@@ -41,12 +39,8 @@
                     <button type="submit">Enviar</button>
                 </form>
             {% else %}
-                <p>Para dejar un comentario, <a href="{% url 'login' %}">inicia sesión</a>.</p>
+                <p>Para dejar un comentario, <a href="{% url 'login' %}" style="text-decoration: none;">inicia sesión</a>.</p>
             {% endif %}
         </div>
     </div>
-
-
-
-
 {% endblock %}
