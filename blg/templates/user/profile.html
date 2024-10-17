@@ -2,36 +2,58 @@
 {% load static %}
 
 {% block content %}
-<link rel="stylesheet" type="text/css" href="../../static/css/profile.css">
+<link rel="stylesheet" type="text/css" href="{% static 'css/profile.css' %}">
 
-<div class="form-container">
-    <h2>Editar Perfil</h2>
+<div class="container mt-5">
+    <div class="row">
 
-    <form method="post">
-        {% csrf_token %}
-        <div class="mb-3">
-            <label for="username">Username</label>
-            <input type="text" name="username" id="username" value="{{ user_form.username.value|default:user.username }}" required>
+        <div class="col-md-4 text-center">
+            <img src="{% if user.author.avatar %}{{ user.author.avatar.url }}{% else %}{% static 'images/default-avatar.jpg' %}{% endif %}" class="img-thumbnail rounded-circle mb-3" alt="Avatar" width="200">    
         </div>
-        <div class="mb-3">
-            <label for="email">Email</label>
-            <input type="email" name="email" id="email" value="{{ user_form.email.value|default:user.email }}" required>
-        </div>
-        <div class="mb-3">
-            <label for="first_name">Password</label>
-            <input type="text" name="first_name" id="first_name" value="{{ user_form.first_name.value|default:user.first_name }}">
-        </div>
-        <div class="mb-3">
-            <label for="last_name">Last Name</label>
-            <input type="text" name="last_name" id="last_name" value="{{ user_form.last_name.value|default:user.last_name }}">
-        </div>
-        <div class="mb-3">
-            <label for="bio">Biography</label>
-            <textarea name="bio" id="bio" rows="4">{{ author_form.bio.value|default:user.author.bio }}</textarea>
-        </div>
-        <button type="submit" class="btn">Actualizar</button>
-    </form>
 
-    <p><a href="{% url 'index' %}">Volver a la página principal</a></p>
+        <!-- Columna para la información personal -->
+        <div class="col-md-8">
+            <h2>Edit Profile</h2>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <div class="mb3">
+                    <p>Upload your photo...</p>
+                     <input type="file" name="avatar" class="form-control-file">
+                </div>
+
+                <div class="mb-3">
+                    <label for="username">Username</label>
+                    <input type="text" class="form-control" name="username" id="username" value="{{ user_form.username.value|default:user.username }}" required>
+                </div>
+                <div class="mb-3">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" name="email" id="email" value="{{ user_form.email.value|default:user.email }}" required>
+                </div>
+
+                <!-- Sección para cambiar la contraseña -->
+                <h3>Cambiar Contraseña</h3>
+                <div class="mb-3">
+                    <label for="current_password">Contraseña Actual</label>
+                    <input type="password" class="form-control" name="current_password" id="current_password">
+                </div>
+                <div class="mb-3">
+                    <label for="new_password">Nueva Contraseña</label>
+                    <input type="password" class="form-control" name="new_password" id="new_password">
+                </div>
+                <div class="mb-3">
+                    <label for="confirm_password">Confirmar Nueva Contraseña</label>
+                    <input type="password" class="form-control" name="confirm_password" id="confirm_password">
+                </div>
+
+                <div class="mb-3">
+                    <label for="bio">Biography</label>
+                    <textarea name="bio" class="form-control" id="bio" rows="4">{{ author_form.bio.value|default:user.author.bio }}</textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Actualizar</button>
+                <a href="{% url 'index' %}" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+    </div>
 </div>
 {% endblock %}

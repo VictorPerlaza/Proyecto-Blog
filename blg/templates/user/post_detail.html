@@ -21,10 +21,16 @@
             <h2>Comentarios</h2>
             <ul>
                 {% for comment in comments %}
-                    <li>
-                        <span class="comment-author">{{ comment.author.user.username }}</span>
-                        <span class="comment-date">Publicado el {{ comment.created_at }}</span>
-                        <div class="comment-content">{{ comment.content }}</div>
+                    <li class="comment-item">
+                        <div class="d-flex align-items-start mb-2">
+                            <!-- Mostrar el avatar del autor -->
+                            <img src="{{ comment.author.avatar.url }}" alt="Avatar" class="img-thumbnail rounded-circle me-2" width="40" height="40">
+                            <div>
+                                <span class="comment-author">{{ comment.author.user.username }}</span>
+                                <span class="comment-date">Publicado el {{ comment.created_at }}</span>
+                                <div class="comment-content">{{ comment.content }}</div>
+                            </div>
+                        </div>
                     </li>
                 {% empty %}
                     <li>No hay comentarios aún.</li>

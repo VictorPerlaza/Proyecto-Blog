@@ -1,0 +1,61 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff; /* Color de fondo */
+    border-bottom: 1px solid #e5e5e5; /* Línea inferior */
+    position: relative; /* Necesario para la posición del dropdown */
+    padding: 1rem; /* Espaciado interno */
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-item {
+    color: #4b5563; /* Color de texto */
+    text-decoration: none; /* Sin subrayado */
+    padding: 0.5rem 1rem; /* Espaciado interno */
+    border-radius: 0.25rem; /* Bordes redondeados */
+    transition: background-color 0.3s; /* Efecto de transición */
+}
+
+.navbar-item:hover {
+    background-color: #f3f4f6; /* Color de fondo al pasar el cursor */
+}
+
+.user-btn {
+    cursor: pointer;
+    background-color: transparent; /* Fondo transparente para el botón */
+    border: none; /* Sin borde */
+    padding: 0; /* Sin padding */
+}
+
+.user-dropdown {
+    position: absolute;
+    right: 0;
+    margin-top: 0.5rem; /* Espaciado hacia abajo */
+    width: 12rem; /* Ancho del dropdown */
+    background-color: white; /* Fondo del dropdown */
+    border-radius: 0.5rem; /* Bordes redondeados */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra */
+    z-index: 50; /* Asegúrate de que esté por encima de otros elementos */
+}
+
+.dropdown-link {
+    display: block; /* Para que cada enlace ocupe el espacio completo */
+    padding: 0.5rem 1rem; /* Espaciado interno */
+    color: #4b5563; /* Color del texto */
+    text-decoration: none; /* Sin subrayado */
+    transition: background-color 0.3s; /* Efecto de transición */
+}
+
+.dropdown-link:hover {
+    background-color: #f3f4f6; /* Color de fondo al pasar el cursor */
+}

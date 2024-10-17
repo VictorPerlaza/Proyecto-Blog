@@ -5,13 +5,12 @@ from .models import Author , Post
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['username', 'email', 'first_name', 'last_name']
+        fields = ['username', 'email']  # Solo username y email
 
 class AuthorProfileForm(forms.ModelForm):
     class Meta:
         model = Author
-        fields = ['bio']  # Campo para la biografía
-
+        fields = ['bio', 'avatar']  # Incluye el campo de avatar
 
 class PostForm(forms.ModelForm):
     class Meta:

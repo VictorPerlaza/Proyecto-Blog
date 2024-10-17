@@ -25,11 +25,6 @@ def index(request):
     return render(request, 'index.html', {'recent_posts': recent_posts})
 
 
-def post_detail(request, id):
-    # Lógica para obtener el post por id y renderizar la plantilla
-    pass
-
-
 def login(request):
     # Verificar si la solicitud es de tipo POST (cuando el usuario envía el formulario)
     if request.method == 'POST':
@@ -65,59 +60,84 @@ def login(request):
     # Renderiza la página de login con el formulario
     return render(request, 'user/login.html', {'form': form})
 
-def register(request):
-    if request.method == 'POST':
-        # Capturar los campos del formulario
-        username = request.POST.get('username')
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-        bio = request.POST.get('bio')  
 
-        # Verificación si el nombre de usuario o email ya existen
+def register(request):
+    if request.method == 'POST': #obtener valores del forms 
+        username = request.POST['username']
+        email = request.POST['email']
+        password = request.POST['password']
+        bio = request.POST.get('bio', '')
+        avatar = request.FILES.get('avatar')  
+        # Validaciones
         if User.objects.filter(username=username).exists():
-            messages.error(request, f'{username} ya existe en nuestra base de datos')
-            return redirect('register')
+            messages.error(request, 'El nombre de usuario ya está en uso. Por favor, elige otro.')
+            return redirect('register') 
 
         if User.objects.filter(email=email).exists():
-            messages.error(request, f'{email} ya existe en nuestra base de datos')
+            messages.error(request, 'Ya hay una cuenta registrada con este email.')
             return redirect('register')
 
-        # Crear el usuario
-        usuario = User.objects.create_user(username=username, email=email, password=password)
+        # Crea el usuario
+        user = User.objects.create_user(username=username, email=email, password=password)
 
-        # Crear el perfil de autor asociado, con la biografía
-        Author.objects.create(user=usuario, bio=bio)
+        # Crea el autor con la biografía y el avatar
+        Author.objects.create(user=user, bio=bio, avatar=avatar)
 
-        messages.success(request, 'Usuario creado correctamente')
-        
-        # Redirigir al usuario a la página de inicio de sesión
+        messages.success(request, 'Tu cuenta ha sido creada exitosamente. Puedes iniciar sesión ahora.')
         return redirect('login')  
+    return render(request, 'user/register.html')  
 
-    return render(request, 'user/register.html', {})
 
 
+@login_required
 def profile(request):
+    user_form = UserProfileForm(instance=request.user)
+    author_form = AuthorProfileForm(instance=request.user.author)
+
     if request.method == 'POST':
+        # Obtén los formularios con los datos de la solicitud
         user_form = UserProfileForm(request.POST, instance=request.user)
-        author_form = AuthorProfileForm(request.POST, instance=request.user.author)
+        author_form = AuthorProfileForm(request.POST, request.FILES, instance=request.user.author)
 
+        # Variables para las contraseñas
+        current_password = request.POST.get('current_password')
+        new_password = request.POST.get('new_password')
+        confirm_password = request.POST.get('confirm_password')
+
+        # Verificamos si el formulario de usuario y autor son válidos
         if user_form.is_valid() and author_form.is_valid():
-            user_form.save()
-            author_form.save()
-            return redirect('index')  # Redirige después de guardar
+            # Si se proporciona una contraseña actual, validamos
+            if current_password:
+                # Verificamos la contraseña actual
+                if request.user.check_password(current_password):
+                    # Verificamos si la nueva contraseña coincide con la confirmación
+                    if new_password == confirm_password:
+                        # Cambia la contraseña
+                        request.user.set_password(new_password)
+                        request.user.save()  # Guarda el usuario después de cambiar la contraseña
+                    else:
+                        messages.error(request, "Las nuevas contraseñas no coinciden.")
+                        return render(request, 'user/profile.html', {'user_form': user_form, 'author_form': author_form})
 
-    else:
-        user_form = UserProfileForm(instance=request.user)
-        author_form = AuthorProfileForm(instance=request.user.author)
+                else:
+                    messages.error(request, "Contraseña actual incorrecta.")
+                    return render(request, 'user/profile.html', {'user_form': user_form, 'author_form': author_form})
 
-    return render(request, 'user/profile.html', {
+            # Guarda los cambios en los formularios si no hay errores
+            user_form.save()  # Guarda los cambios del usuario
+            author_form.save()  # Guarda los cambios del autor
+
+            messages.success(request, 'Tu perfil ha sido actualizado exitosamente.')
+            return redirect('profile')  # Cambia 'profile' por el nombre correcto de la URL
+
+    context = {
         'user_form': user_form,
         'author_form': author_form,
-    })
+    }
+    return render(request, 'user/profile.html', context)  # Usa la plantilla correcta
 
 
-
-
+@login_required
 def create_post(request):
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES)

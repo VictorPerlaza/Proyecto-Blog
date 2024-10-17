@@ -8,4 +8,4 @@ document.addEventListener("DOMContentLoaded", function() {
             }, 500); // Tiempo de desvanecimiento
         }, 3000); // Tiempo antes de comenzar a desvanecerse (en milisegundos)
     });
-});
+});    

@@ -1,12 +1,9 @@
 {% extends "base.html" %}
 {% load static %}
 
-
 {% block content %}
 
-</div>
-
-<link rel="stylesheet" type="text/css" href="../../static/css/index.css">
+<link rel="stylesheet" type="text/css" href="../static/css/index.css">
 
 <div class="container">
 
@@ -18,33 +15,29 @@
 
     <main>
         <h2>Posts Recientes</h2>
-        <div class="posts">
+        <div class="row">
             {% for post in recent_posts %}
-            <article class="post" >
-                {% if post.image %}
-                <img src="{{ post.image.url }}" alt="{{ post.title }}">
-                {% endif %}
-                <h3><a href="#">{{ post.title }}</a></h3>
-                <p class="fecha">Publicado el {{ post.created_at|date:"d M Y" }}</p>
-                <p>{{ post.content|truncatewords:5 }}</p>
-                <a href="{% url 'post_detail' post.pk %}" class="leer-mas">Leer más</a>
-            </article>
+            <div class="col-md-4">
+                <div class="card">
+                    {% if post.image %}
+                    <img src="{{ post.image.url }}" class="card-img-top" alt="{{ post.title }}">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ post.title }}</h5>
+                        <p class="card-text">{{ post.content|truncatewords:5 }}</p>
+                        <p class="fecha">Publicado el {{ post.created_at|date:"d M Y" }}</p>
+                        <a href="{% url 'post_detail' post.pk %}" class="btn btn-primary">Leer más</a>
+                    </div>
+                </div>
+            </div>
             {% empty %}
             <p>No hay posts recientes.</p>
             {% endfor %}
-            
         </div>
     </main>
 
-    
-
 </div>
 
- 
-
-
-
+<script src="../static/js/index.js"></script>
 
 {% endblock %}
-
-
