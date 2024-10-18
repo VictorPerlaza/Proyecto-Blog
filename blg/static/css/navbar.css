@@ -1,61 +1,138 @@
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-}
-
 .navbar {
+    background-color: #fff; /* Color de fondo blanco */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    padding: 10px 20px; /* Espaciado interno */
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #ffffff; /* Color de fondo */
-    border-bottom: 1px solid #e5e5e5; /* Línea inferior */
-    position: relative; /* Necesario para la posición del dropdown */
-    padding: 1rem; /* Espaciado interno */
+}
+
+.navbar-container {
+    display: flex;
+    align-items: center;
+    width: 100%; /* Asegura que ocupe todo el ancho */
 }
 
 .navbar-brand {
+    color: #333; /* Color del texto */
+    text-decoration: none; /* Sin subrayado */
+    font-size: 24px; /* Tamaño de la fuente */
     display: flex;
-    align-items: center;
+    align-items: center; /* Alinear verticalmente */
 }
 
-.navbar-item {
-    color: #4b5563; /* Color de texto */
-    text-decoration: none; /* Sin subrayado */
-    padding: 0.5rem 1rem; /* Espaciado interno */
-    border-radius: 0.25rem; /* Bordes redondeados */
-    transition: background-color 0.3s; /* Efecto de transición */
+.navbar-brand i {
+    margin-right: 8px; /* Espacio entre el icono y el texto */
 }
 
-.navbar-item:hover {
-    background-color: #f3f4f6; /* Color de fondo al pasar el cursor */
+.navbar-search {
+    display: flex; /* Usar flexbox para alinear elementos */
+    align-items: center; /* Alinear verticalmente */
+    margin: 0 20px; /* Margen a los lados */
 }
 
-.user-btn {
-    cursor: pointer;
-    background-color: transparent; /* Fondo transparente para el botón */
+.search-input {
+    padding: 10px; /* Espaciado interno */
+    border: 2px solid #007BFF; /* Borde azul */
+    border-radius: 4px; /* Bordes redondeados */
+    width: 250px; /* Ancho fijo */
+    transition: border-color 0.3s; /* Transición suave */
+}
+
+.search-input:focus {
+    border-color: #0056b3; /* Borde más oscuro al enfocar */
+    outline: none; /* Sin contorno */
+}
+
+.search-button {
+    background-color: #007BFF; /* Color de fondo del botón */
+    color: white; /* Color del texto */
+    padding: 10px 15px; /* Espaciado interno */
     border: none; /* Sin borde */
-    padding: 0; /* Sin padding */
+    border-radius: 4px; /* Bordes redondeados */
+    margin-left: 5px; /* Margen a la izquierda */
+    cursor: pointer; /* Cambiar el cursor al pasar por encima */
+    transition: background-color 0.3s; /* Transición de color */
 }
 
-.user-dropdown {
-    position: absolute;
-    right: 0;
-    margin-top: 0.5rem; /* Espaciado hacia abajo */
-    width: 12rem; /* Ancho del dropdown */
-    background-color: white; /* Fondo del dropdown */
-    border-radius: 0.5rem; /* Bordes redondeados */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra */
-    z-index: 50; /* Asegúrate de que esté por encima de otros elementos */
+.search-button:hover {
+    background-color: #0056b3; /* Color más oscuro al pasar el mouse */
 }
 
-.dropdown-link {
-    display: block; /* Para que cada enlace ocupe el espacio completo */
-    padding: 0.5rem 1rem; /* Espaciado interno */
-    color: #4b5563; /* Color del texto */
+.navbar-categories {
+    list-style: none; /* Sin estilo de lista */
+    display: flex; /* Usar flexbox */
+    margin: 0 20px; /* Margen a los lados */
+}
+
+.navbar-categories li {
+    margin: 0 10px; /* Margen a la izquierda y derecha */
+}
+
+.navbar-categories a {
+    color: #333; /* Color del texto */
     text-decoration: none; /* Sin subrayado */
-    transition: background-color 0.3s; /* Efecto de transición */
+    padding: 5px 10px; /* Espaciado interno */
+    transition: background-color 0.3s; /* Transición de color */
 }
 
-.dropdown-link:hover {
-    background-color: #f3f4f6; /* Color de fondo al pasar el cursor */
+.navbar-categories a:hover {
+    background-color: #f0f0f0; /* Color de fondo al pasar el mouse */
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center; /* Alinear verticalmente */
+}
+
+.btn-create-post {
+    background-color: #28a745; /* Color de fondo verde */
+    color: white; /* Color del texto */
+    padding: 10px 15px; /* Espaciado interno */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    text-decoration: none; /* Sin subrayado */
+    margin-right: 20px; /* Margen a la derecha */
+    transition: background-color 0.3s; /* Transición de color */
+}
+
+.btn-create-post:hover {
+    background-color: #218838; /* Color más oscuro al pasar el mouse */
+}
+
+.avatar-dropdown {
+    position: relative; /* Para posicionar el dropdown */
+}
+
+.avatar {
+    width: 40px; /* Ancho del avatar */
+    height: 40px; /* Altura del avatar */
+    border-radius: 50%; /* Redondear el avatar */
+    cursor: pointer; /* Cambiar el cursor al pasar por encima */
+}
+
+.dropdown-content {
+    display: none; /* Ocultar por defecto */
+    position: absolute; /* Posicionar el dropdown */
+    right: 0; /* Alinear a la derecha */
+    background-color: white; /* Fondo blanco */
+    min-width: 150px; /* Ancho mínimo */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra */
+    z-index: 1; /* Asegurar que esté por encima */
+}
+
+.avatar-dropdown:hover .dropdown-content {
+    display: block; /* Mostrar al pasar el mouse */
+}
+
+.dropdown-content a {
+    color: #333; /* Color del texto */
+    padding: 10px; /* Espaciado interno */
+    text-decoration: none; /* Sin subrayado */
+    display: block; /* Asegurar que ocupen todo el ancho */
+    transition: background-color 0.3s; /* Transición de color */
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1; /* Color al pasar el mouse */
 }

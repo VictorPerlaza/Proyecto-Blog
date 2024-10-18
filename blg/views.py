@@ -11,18 +11,18 @@ from django.views.generic import DetailView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from .models import Post, Comment, Author
-
+import pytz
 
 # Create your views here.
 
 def index(request):
-    recent_posts = Post.objects.filter(published=True).order_by('-created_at')[:6]
+    posts = Post.objects.filter(published=True)
     
     if request.user.is_authenticated:
         messages.info(request, f"¡Bienvenido, {request.user.username}!")
     
-    print(recent_posts)  # Verifica si hay posts capturados
-    return render(request, 'index.html', {'recent_posts': recent_posts})
+    print(posts)  # Verifica si hay posts capturados
+    return render(request, 'index.html', {'recent_posts': posts})
 
 
 def login(request):
@@ -143,15 +143,16 @@ def create_post(request):
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             post = form.save(commit=False)
-            # Obtener el objeto Author correspondiente al usuario actual
             author = get_object_or_404(Author, user=request.user)
-            post.author = author  # Asignar la instancia de Author
-            post.save()
-            return redirect('index')  # Redirigir a la página principal después de crear el post
+            post.author = author
+            post.save()  # Guarda el post primero
+            form.save_m2m()  # Guarda las relaciones ManyToMany
+            return redirect('index')
     else:
         form = PostForm()
     
     return render(request, 'user/create_post.html', {'form': form})
+
 
 
 
@@ -169,7 +170,8 @@ class PostDetailView(DetailView):
         # Verifica si el usuario está autenticado antes de procesar el comentario
         if not request.user.is_authenticated:
             return redirect('login')  # Redirige al inicio de sesión si no está autenticado
-        
+                # Convierte la hora de cada comentario a la zona horaria del usuario
+
         post = self.get_object()
         content = request.POST.get('content')
         author = Author.objects.get(user=request.user)

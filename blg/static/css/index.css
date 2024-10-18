@@ -5,68 +5,58 @@ body {
 }
 
 header {
-    background-color: #333;
-    color: white;
+    background-color: white; /* Fondo blanco para el navbar */
+    color: #333; /* Color del texto */
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Sombra sutil */
 }
 
-header .logo {
+.logo {
     font-size: 24px;
 }
 
-nav ul {
-    list-style: none;
-    display: flex;
-    margin: 0;
-    padding: 0;
-}
-
-nav ul li {
-    margin-left: 20px;
-}
-
-nav ul li a {
-    color: white;
+.navbar-brand {
+    color: #333; /* Color del texto del nombre del blog */
     text-decoration: none;
 }
 
-input[type="text"] {
-    padding: 5px;
-}
-
-.banner {
-    background-image: url('banner.jpg');
-    color: white;
-    display: flex; /* Usamos flexbox para alinear elementos */
-    justify-content: flex-start; /* Alinea el contenido a la izquierda */
-    align-items: center; /* Alinea verticalmente el contenido */
-    padding: 50px 20px; /* Espaciado en el banner */
-    border-bottom: 1px solid #ccc; /* Línea debajo del banner */
-    margin-top: 20px; /* Añadir margen superior para separarlo del navbar */
+.navbar-right {
+    display: flex;
+    align-items: center;
 }
 
 .btn-create-post {
-    background-color: #007BFF; /* Color de fondo del botón */
+    background-color: #007BFF; /* Color del botón */
     color: white; /* Color del texto */
     padding: 10px 15px; /* Espaciado interno */
     border: none; /* Sin borde */
     border-radius: 5px; /* Bordes redondeados */
     text-decoration: none; /* Sin subrayado */
-    font-size: 16px; /* Tamaño de la fuente */
+    margin-right: 20px; /* Margen a la derecha */
     transition: background-color 0.3s; /* Transición de color */
-    margin-left: 20px; /* Margen a la izquierda para separarlo del borde */
 }
 
 .btn-create-post:hover {
     background-color: #0056b3; /* Color más oscuro al pasar el mouse */
 }
 
-main {
+.main-content {
     padding: 20px;
-    margin-top: 20px; /* Añadir margen superior para separar del banner */
+    margin-top: 20px; /* Añadir margen superior para separar del navbar */
+}
+
+.banner {
+    background-image: url('banner.jpg');
+    color: white;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 50px 20px;
+    border-bottom: 1px solid #ccc;
+    margin-top: 20px; /* Añadir margen superior para separarlo del navbar */
 }
 
 h2 {
@@ -118,9 +108,47 @@ footer {
     text-decoration: none;
 }
 
-
 .card-img-top {
-    width: 100%;          /* Asegura que la imagen ocupe el ancho completo de la tarjeta */
-    height: 200px;        /* Fija la altura de las imágenes */
-    object-fit: cover;    /* Ajusta la imagen sin distorsionar, recortando si es necesario */
+    width: 100%; /* Asegura que la imagen ocupe el ancho completo de la tarjeta */
+    height: 200px; /* Fija la altura de las imágenes */
+    object-fit: cover; /* Ajusta la imagen sin distorsionar, recortando si es necesario */
+}
+
+/* Estilos adicionales para el menú desplegable del usuario */
+.user-menu {
+    position: relative;
+}
+
+.user-menu .avatar {
+    width: 40px; /* Tamaño del avatar */
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid #007BFF; /* Borde azul alrededor del avatar */
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #fff;
+    color: #333;
+    min-width: 120px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.user-menu:hover .dropdown-content {
+    display: block; /* Mostrar menú al pasar el mouse */
+}
+
+.dropdown-content a {
+    color: #333;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1; /* Color de fondo al pasar el mouse */
 }
