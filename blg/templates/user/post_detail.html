@@ -3,34 +3,46 @@
 
 {% block content %}
     <title>{{ post.title }}</title>
-    <link rel="stylesheet" href="{% static 'css/post_detail.css' %}">  <!-- Usa la etiqueta static para la ruta -->
+    <link rel="stylesheet" href="{% static 'css/post_detail.css' %}">
 
     <div class="container">
-        <h1>{{ post.title }}</h1>
-        
-        {% if post.image %}
-            <img src="{{ post.image.url }}" alt="Imagen de {{ post.title }}">
-        {% endif %}
-        
-        <p>{{ post.content }}</p>
-        <p><strong>Autor:</strong> {{ post.author.user.username }}</p>
-        <p><strong>Categoría:</strong> {{ post.category.name }}</p>
-        <p><strong>Tags:</strong>
-            {% for tag in post.tags.all %}
-                {{ tag.name }}{% if not forloop.last %}, {% endif %}
-            {% empty %}
-                No hay etiquetas.
-            {% endfor %}
-        </p>
-        
+        <section class="post-header">
+            <h1>{{ post.title }}</h1>
+            <p><strong>Author:</strong> {{ post.author.user.username }}</p>
+        </section>
 
-        <div class="comments-section">
+        {% if post.image %}
+            <section class="post-image">
+                <img src="{{ post.image.url }}" alt="Imagen de {{ post.title }}" class="img-responsive">
+            </section>
+        {% endif %}
+
+        <section class="post-content">
+            <p>{{ post.content }}</p>
+            {% for image in post.images.all %}  <!-- Si tienes varias imágenes relacionadas -->
+                <div class="image-block">
+                    <img src="{{ image.url }}" alt="Imagen relacionada" class="img-responsive">
+                </div>
+            {% endfor %}
+        </section>
+
+        <section class="post-meta">
+            <p><strong>Categoría:</strong> {{ post.category.name }}</p>
+            <p><strong>Tags:</strong>
+                {% for tag in post.tags.all %}
+                    {{ tag.name }}{% if not forloop.last %}, {% endif %}
+                {% empty %}
+                    No hay etiquetas.
+                {% endfor %}
+            </p>
+        </section>
+
+        <section class="comments-section">
             <h2>Comentarios</h2>
-            <ul>
+            <ul id="comentarios">
                 {% for comment in comments %}
                     <li class="comment-item">
                         <div class="d-flex align-items-start mb-2">
-                            <!-- Mostrar el avatar del autor -->
                             <img src="{{ comment.author.avatar.url }}" alt="Avatar" class="img-thumbnail rounded-circle me-2" width="40" height="40">
                             <div>
                                 <span class="comment-author">{{ comment.author.user.username }}</span>
@@ -54,6 +66,7 @@
             {% else %}
                 <p>Para dejar un comentario, <a href="{% url 'login' %}" style="text-decoration: none;">inicia sesión</a>.</p>
             {% endif %}
-        </div>
+        </section>
     </div>
+
 {% endblock %}

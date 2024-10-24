@@ -25,17 +25,27 @@ main {
 
 /* Estilo del footer */
 footer {
-    background-color: #333;
-    color: white;
-    text-align: center;
-    padding: 10px 0;
-    width: 100%;
+    background-color: #333; /* Color de fondo del footer */
+    color: white; /* Color del texto */
+    text-align: center; /* Centrar el texto */
+    padding: 10px 0; /* Espaciado interno */
+    width: 100%; /* Asegura que ocupe todo el ancho */
     margin-top: auto; /* Asegura que el footer siempre esté al fondo */
-    position: relative; /* No interfiere con el contenido de la página */
+    position: relative; /* Mantiene su posición relativa al flujo del documento */
     z-index: 1; /* Asegura que esté por encima de otros elementos si es necesario */
 }
 
-/* Estilo de los formularios */
+/* Estilo de enlaces en el footer */
+footer a {
+    color: white; /* Color de los enlaces */
+    text-decoration: none; /* Elimina el subrayado */
+}
+
+footer a:hover {
+    text-decoration: underline; /* Añade subrayado al pasar el cursor */
+}
+
+/* Estilo de los formularios (si aplicas formularios en el footer) */
 .form-control {
     width: 100%; /* El formulario ocupará todo el ancho disponible */
     padding: 10px;

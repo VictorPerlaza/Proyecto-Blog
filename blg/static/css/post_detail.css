@@ -3,11 +3,6 @@
     box-sizing: border-box; /* Asegura que padding y borde se incluyan en el ancho total */
 }
 
-html, body {
-    height: 100%; /* Asegura que el body ocupe toda la altura */
-    margin: 0; /* Elimina el margen del body */
-    padding: 0; /* Elimina el padding del body */
-}
 
 body {
     display: flex;
@@ -17,6 +12,8 @@ body {
 .container {
     flex: 1; /* Permite que el contenedor ocupe todo el espacio disponible */
     width: 100%; /* Asegura que el contenedor ocupe todo el ancho */
+    max-width: 800px; /* Ancho máximo para centrar el contenido */
+  
     padding: 20px; /* Espaciado interno */
     background: white; /* Fondo blanco */
     border-radius: 8px; /* Bordes redondeados */
@@ -42,8 +39,28 @@ p {
     margin: 15px 0; /* Espaciado vertical en párrafos */
     line-height: 1.6; /* Altura de línea */
     color: #555; /* Color del texto */
+    text-align: justify; /* Justifica el texto */
 }
 
+/* Nuevos estilos para organizar el contenido y las imágenes */
+.post-image {
+    margin: 20px 0; /* Espaciado superior e inferior */
+    text-align: center; /* Centra la imagen */
+}
+
+.image-block {
+    margin: 15px 0; /* Espacio entre las imágenes */
+}
+
+.image-block img {
+    border-radius: 8px; /* Bordes suaves para las imágenes relacionadas */
+}
+
+.post-content {
+    margin-bottom: 20px; /* Espaciado inferior */
+}
+
+/* Comentarios (sin cambios) */
 .comment-author {
     font-weight: bold; /* Negrita para el autor del comentario */
     color: #007BFF; /* Color del texto del autor */
@@ -112,3 +129,5 @@ form button {
 form button:hover {
     background: #218838; /* Color más oscuro al pasar el mouse */
 }
+
+
