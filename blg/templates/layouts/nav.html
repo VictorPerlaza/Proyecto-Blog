@@ -2,8 +2,12 @@
 {% url 'login' as lg %}
 {% url 'cerrar' as lgt %}
 {% url 'profi' as lgt %}
+{% url 'noti' as not %}
+
+<link rel="stylesheet" type="text/css" href="../../static/css/navbar.css">
 
 
+ <!--
   <nav class="navbar bg-body-tertiary fixed-top">
     <div class="container-fluid">
       <a class="navbar-brand" href="{% url 'index' %}"><i class="fa-regular fa-lemon fa-2xl"></i> Entre Letras y Pensamientos </a>
@@ -25,6 +29,10 @@
 
             {% if user.is_authenticated %}
 
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{% url 'notifications' %}"><i class="fa-regular fa-message"></i> Notifications</a>
+            </li>
+
             <li class="nav-item"></li>
               <a class="nav-link active" aria-current="page" href="{% url 'profile' %}"> <i class="fa-solid fa-user"></i> Profile</a>
             </li>
@@ -32,12 +40,62 @@
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="{% url 'logout' %}"> <i class="fa-solid fa-arrow-right"></i> Logout</a>
             </li>
+           
             {% endif %}
           </ul>
         </div>
       </div>
     </div>
   </nav>
+  -->
+  
+  <header>
+    <nav class="custom-navbar navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container-fluid custom-main-content">
+
+            <a class="navbar-brand" href="{% url 'index' %}">
+                <i class="fa-regular fa-lemon fa-2xl"></i> Entre Letras y Pensamientos
+            </a>
+
+  
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#customNavbarNav" aria-controls="customNavbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+ 
+            <div class="collapse navbar-collapse justify-content-end" id="customNavbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="">Acerca de</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="">Contacto</a>
+                    </li>
+                </ul>
+
+                <!-- Menú de Usuario -->
+                <div class="custom-user-menu ms-3">
+                    {% if user.is_authenticated %}
+                        <img src="{{ user.author.avatar.url }}" alt="Avatar" class="custom-avatar" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                            <li><a class="dropdown-item" href="{% url 'create_post' %}">Crear Post</a></li>
+                            <li><a class="dropdown-item" href="{% url 'profile' %}">Mi Perfil</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{% url 'logout' %}">Cerrar Sesión</a></li>
+                        </ul>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="btn btn-primary ms-3">Iniciar Sesión</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+<div class="custom-content-offset"></div>
+
 
 
 

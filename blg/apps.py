@@ -7,3 +7,11 @@ class BlgConfig(AppConfig):
 
 # blog/apps.py
 
+# apps.py o al final de models.py
+from django.apps import AppConfig
+
+class BlogConfig(AppConfig):
+    name = 'tu_app_blog'
+
+    def ready(self):
+        import blg.signals  # Asegúrate de tener importada la señal

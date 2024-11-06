@@ -3,28 +3,40 @@
 
 {% block content %}
 
-<link rel="stylesheet" type="text/css" href="../static/css/index.css">
+<title >Home</title>
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}">
 
 <div class="container">
+    <!-- Navbar (asume que tu base.html ya tiene el navbar incluido) -->
 
-    <section class="banner">
-        {% if user.is_authenticated %}
-        <a href="{% url 'create_post' %}" class="btn-create-post">Crear un nuevo post</a>
-        {% endif %}
-    </section>
+    <!-- Hero Section -->
+    <div class="row hero-section align-items-center mb-4">
+        <div class="col-md-8">
+            <h1 class="hero-title">Bienvenidos a nuestro blog</h1>
+            <p>Explora los artículos más recientes y populares en nuestra comunidad. Conoce nuestras categorías y encuentra contenido de tu interés.</p>
+            <a href="{% url 'create_post' %}" class="btn btn-dark hero-button">Crear un nuevo post</a>
+        </div>
+        <div class="col-md-4">
+            
+        </div>
+    </div>
 
+    <!-- Main Posts Section -->
     <main>
         <h2>Posts Recientes</h2>
         <div class="row">
             {% for post in recent_posts %}
-            <div class="col-md-4">
+            <div class="col-md-4 mb-4">
                 <div class="card">
                     {% if post.image %}
-                    <img src="{{ post.image.url }}" class="card-img-top" alt="{{ post.title }}">
+                    <img src="{{ post.image.url }}" class="img-fluid" alt="{{ post.title }}">
+                    {% else %}
+                    <img src="https://via.placeholder.com/150" class="img-fluid" alt="Imagen por defecto">
                     {% endif %}
                     <div class="card-body">
                         <h5 class="card-title">{{ post.title }}</h5>
-                        <p class="card-text">{{ post.content|truncatewords:5 }}</p>
+                        <p class="card-text">{{ post.content|truncatewords:20 }}</p>
                         <p class="fecha">Publicado el {{ post.created_at|date:"d M Y" }}</p>
                         <a href="{% url 'post_detail' post.pk %}" class="btn btn-primary">Leer más</a>
                     </div>
@@ -36,8 +48,28 @@
         </div>
     </main>
 
+    <!-- Sidebar - Popular Section -->
+    <div class="col-md-4 popular-section">
+        <h5>Popular</h5>
+        {% for popular_post in popular_posts %}
+        <div class="popular-post mb-3">
+            {% if popular_post.image %}
+            <img src="{{ popular_post.image.url }}" alt="Popular post image" class="img-thumbnail me-3" style="width: 80px; height: 80px; object-fit: cover;">
+            {% else %}
+            <img src="https://via.placeholder.com/80" alt="Imagen por defecto" class="img-thumbnail me-3" style="width: 80px; height: 80px; object-fit: cover;">
+            {% endif %}
+            <div>
+                <h6 class="post-title">{{ popular_post.title }}</h6>
+                <p class="small">{{ popular_post.author.user.username }} en {{ popular_post.category.name }}</p>
+            </div>
+        </div>
+        {% empty %}
+        <p>No hay posts populares en este momento.</p>
+        {% endfor %}
+    </div>
+
 </div>
 
-<script src="../static/js/index.js"></script>
+<script src="{% static 'js/index.js' %}"></script>
 
 {% endblock %}

@@ -1,17 +1,19 @@
+/* Reset */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;  
 }
 
+/* Navbar */
 header {
-    background-color: white; /* Fondo blanco para el navbar */
-    color: #333; /* Color del texto */
+    background-color: white;
+    color: #333;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Sombra sutil */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 .logo {
@@ -19,7 +21,7 @@ header {
 }
 
 .navbar-brand {
-    color: #333; /* Color del texto del nombre del blog */
+    color: #333;
     text-decoration: none;
 }
 
@@ -28,46 +30,75 @@ header {
     align-items: center;
 }
 
+/* Botón Crear Post */
 .btn-create-post {
-    background-color: #007BFF; /* Color del botón */
-    color: white; /* Color del texto */
-    padding: 10px 15px; /* Espaciado interno */
-    border: none; /* Sin borde */
-    border-radius: 5px; /* Bordes redondeados */
-    text-decoration: none; /* Sin subrayado */
-    margin-right: 20px; /* Margen a la derecha */
-    transition: background-color 0.3s; /* Transición de color */
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-right: 20px;
+    transition: background-color 0.3s;
 }
 
 .btn-create-post:hover {
-    background-color: #0056b3; /* Color más oscuro al pasar el mouse */
+    background-color: #0056b3;
 }
 
+/* Contenido Principal */
 .main-content {
     padding: 20px;
-    margin-top: 20px; /* Añadir margen superior para separar del navbar */
+    margin-top: 20px;
 }
 
+/* Hero Section */
+.hero-section {
+    background-color: #f0f8f7;
+    padding: 2rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.hero-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.hero-button {
+    margin-top: 1rem;
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.hero-button:hover {
+    background-color: #0056b3;
+}
+
+/* Banner */
 .banner {
-    background-image: url('banner.jpg');
     color: white;
     display: flex;
     justify-content: flex-start;
     align-items: center;
     padding: 50px 20px;
     border-bottom: 1px solid #ccc;
-    margin-top: 20px; /* Añadir margen superior para separarlo del navbar */
+    margin-top: 20px;
+    background-image: url('banner.jpg');
 }
 
-h2 {
-    margin-top: 40px; /* Aumentar el margen superior para que no esté tan cerca del banner */
-}
-
+/* Sección de Posts */
 .posts {
     display: flex;
-    flex-wrap: wrap; /* Permite que los elementos se envuelvan en varias filas */
-    justify-content: space-between; /* Espacio uniforme entre elementos */
-    margin: -10px; /* Compensar el margen de las publicaciones */
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
 }
 
 .post {
@@ -81,13 +112,19 @@ h2 {
     transform: translateY(0);
 }
 
-.post img {
-    width: 100%; /* Asegura que la imagen ocupe todo el ancho del contenedor */
-    height: 200px; /* Establece una altura fija para todas las imágenes */
-    object-fit: cover; /* Recorta la imagen para que se ajuste al contenedor */
-    border-radius: 5px; /* Para mantener el estilo redondeado */
+.card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
 }
 
+.card-img-top, .post img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 5px 5px 0 0;
+}
+
+/* Enlace Leer Más */
 .leer-mas {
     display: inline-block;
     margin-top: 10px;
@@ -95,6 +132,27 @@ h2 {
     text-decoration: none;
 }
 
+/* Sección Popular */
+.popular-section {
+    background-color: #f7f9fa;
+    padding: 1rem;
+}
+
+.popular-post {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.popular-post img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    margin-right: 1rem;
+    border-radius: 5px;
+}
+
+/* Footer */
 footer {
     background-color: #333;
     color: white;
@@ -102,29 +160,24 @@ footer {
     padding: 10px 0;
 }
 
+/* Redes Sociales en el Footer */
 .social a {
     margin: 0 10px;
     color: white;
     text-decoration: none;
 }
 
-.card-img-top {
-    width: 100%; /* Asegura que la imagen ocupe el ancho completo de la tarjeta */
-    height: 200px; /* Fija la altura de las imágenes */
-    object-fit: cover; /* Ajusta la imagen sin distorsionar, recortando si es necesario */
-}
-
-/* Estilos adicionales para el menú desplegable del usuario */
+/* Menú Desplegable del Usuario */
 .user-menu {
     position: relative;
 }
 
 .user-menu .avatar {
-    width: 40px; /* Tamaño del avatar */
+    width: 40px;
     height: 40px;
     border-radius: 50%;
     cursor: pointer;
-    border: 2px solid #007BFF; /* Borde azul alrededor del avatar */
+    border: 2px solid #007BFF;
 }
 
 .dropdown-content {
@@ -139,7 +192,7 @@ footer {
 }
 
 .user-menu:hover .dropdown-content {
-    display: block; /* Mostrar menú al pasar el mouse */
+    display: block;
 }
 
 .dropdown-content a {
@@ -150,5 +203,5 @@ footer {
 }
 
 .dropdown-content a:hover {
-    background-color: #f1f1f1; /* Color de fondo al pasar el mouse */
+    background-color: #f1f1f1;
 }

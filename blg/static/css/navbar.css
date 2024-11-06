@@ -1,138 +1,68 @@
-.navbar {
-    background-color: #fff; /* Color de fondo blanco */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil */
-    padding: 10px 20px; /* Espaciado interno */
+/* Navbar personalizado */
+.custom-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: white; /* Fondo blanco */
+    color: #333;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    padding: 5px 0; /* Reduce el grosor del navbar */
+}
+
+.custom-main-content {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 0 20px;
 }
 
-.navbar-container {
+.custom-navbar .navbar-brand {
     display: flex;
     align-items: center;
-    width: 100%; /* Asegura que ocupe todo el ancho */
+    color: #333;
+    font-weight: bold;
+    text-decoration: none;
+    margin-right: auto; /* Alinea el nombre e icono a la izquierda */
 }
 
-.navbar-brand {
-    color: #333; /* Color del texto */
-    text-decoration: none; /* Sin subrayado */
-    font-size: 24px; /* Tamaño de la fuente */
+.custom-navbar .navbar-brand i {
+    margin-right: 10px;
+}
+
+.custom-user-menu {
     display: flex;
-    align-items: center; /* Alinear verticalmente */
+    align-items: center;
 }
 
-.navbar-brand i {
-    margin-right: 8px; /* Espacio entre el icono y el texto */
+.custom-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
 }
 
-.navbar-search {
-    display: flex; /* Usar flexbox para alinear elementos */
-    align-items: center; /* Alinear verticalmente */
-    margin: 0 20px; /* Margen a los lados */
+/* Ajustes para el contenido principal */
+.custom-content-offset {
+    margin-top: 60px; /* Ajuste de margen para compensar el navbar */
 }
 
-.search-input {
-    padding: 10px; /* Espaciado interno */
-    border: 2px solid #007BFF; /* Borde azul */
-    border-radius: 4px; /* Bordes redondeados */
-    width: 250px; /* Ancho fijo */
-    transition: border-color 0.3s; /* Transición suave */
+/* Ajustes adicionales */
+.navbar-nav .nav-link {
+    color: #333;
+    font-weight: 500;
+    padding: 0 10px;
 }
 
-.search-input:focus {
-    border-color: #0056b3; /* Borde más oscuro al enfocar */
-    outline: none; /* Sin contorno */
+.btn-primary {
+    font-size: 0.875rem; /* Ajusta el tamaño del botón de "Iniciar Sesión" */
 }
 
-.search-button {
-    background-color: #007BFF; /* Color de fondo del botón */
-    color: white; /* Color del texto */
-    padding: 10px 15px; /* Espaciado interno */
-    border: none; /* Sin borde */
-    border-radius: 4px; /* Bordes redondeados */
-    margin-left: 5px; /* Margen a la izquierda */
-    cursor: pointer; /* Cambiar el cursor al pasar por encima */
-    transition: background-color 0.3s; /* Transición de color */
-}
-
-.search-button:hover {
-    background-color: #0056b3; /* Color más oscuro al pasar el mouse */
-}
-
-.navbar-categories {
-    list-style: none; /* Sin estilo de lista */
-    display: flex; /* Usar flexbox */
-    margin: 0 20px; /* Margen a los lados */
-}
-
-.navbar-categories li {
-    margin: 0 10px; /* Margen a la izquierda y derecha */
-}
-
-.navbar-categories a {
-    color: #333; /* Color del texto */
-    text-decoration: none; /* Sin subrayado */
-    padding: 5px 10px; /* Espaciado interno */
-    transition: background-color 0.3s; /* Transición de color */
-}
-
-.navbar-categories a:hover {
-    background-color: #f0f0f0; /* Color de fondo al pasar el mouse */
-}
-
-.navbar-right {
-    display: flex;
-    align-items: center; /* Alinear verticalmente */
-}
-
-.btn-create-post {
-    background-color: #28a745; /* Color de fondo verde */
-    color: white; /* Color del texto */
-    padding: 10px 15px; /* Espaciado interno */
-    border: none; /* Sin borde */
-    border-radius: 5px; /* Bordes redondeados */
-    text-decoration: none; /* Sin subrayado */
-    margin-right: 20px; /* Margen a la derecha */
-    transition: background-color 0.3s; /* Transición de color */
-}
-
-.btn-create-post:hover {
-    background-color: #218838; /* Color más oscuro al pasar el mouse */
-}
-
-.avatar-dropdown {
-    position: relative; /* Para posicionar el dropdown */
-}
-
-.avatar {
-    width: 40px; /* Ancho del avatar */
-    height: 40px; /* Altura del avatar */
-    border-radius: 50%; /* Redondear el avatar */
-    cursor: pointer; /* Cambiar el cursor al pasar por encima */
-}
-
-.dropdown-content {
-    display: none; /* Ocultar por defecto */
-    position: absolute; /* Posicionar el dropdown */
-    right: 0; /* Alinear a la derecha */
-    background-color: white; /* Fondo blanco */
-    min-width: 150px; /* Ancho mínimo */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra */
-    z-index: 1; /* Asegurar que esté por encima */
-}
-
-.avatar-dropdown:hover .dropdown-content {
-    display: block; /* Mostrar al pasar el mouse */
-}
-
-.dropdown-content a {
-    color: #333; /* Color del texto */
-    padding: 10px; /* Espaciado interno */
-    text-decoration: none; /* Sin subrayado */
-    display: block; /* Asegurar que ocupen todo el ancho */
-    transition: background-color 0.3s; /* Transición de color */
-}
-
-.dropdown-content a:hover {
-    background-color: #f1f1f1; /* Color al pasar el mouse */
+/* Responsivo */
+@media (max-width: 768px) {
+    .custom-navbar .navbar-nav {
+        flex-direction: column;
+        gap: 10px;
+    }
 }

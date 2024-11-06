@@ -10,4 +10,7 @@ urlpatterns = [
     path('profile', views.profile, name='profile'),  
     path('create_post', views.create_post, name='create_post'),  
     path('post/<int:pk>/', PostDetailView.as_view(), name='post_detail'), 
+    path('notifications', views.notifications, name='notifications'),  
+    path('post/<int:post_id>/react/<str:reaction_type>/', views.react_to_post, name='react_to_post'),
+    
 ]
