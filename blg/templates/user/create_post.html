@@ -2,48 +2,57 @@
 {% load static %}
 
 {% block content %}
-
+<title>Create Post</title>
 <link rel="stylesheet" type="text/css" href="{% static 'css/post.css' %}">
 
-<main>
-    <h2>Crear un Nuevo Post</h2>
+<main class="create-post-container">
+    <h2 class="create-post-title">Crear un Nuevo Post</h2>
     <form method="POST" enctype="multipart/form-data" class="post-form">
         {% csrf_token %}
         
+        <!-- Campo de título -->
         <div class="form-group">
-            {{ form.title.label_tag }}
-            {{ form.title }}  <!-- Campo de título -->
+            <label for="{{ form.title.id_for_label }}" class="form-label">Título:</label>
+            {{ form.title }}
             {{ form.title.errors }}
         </div>
 
+        <!-- Campo de contenido -->
         <div class="form-group">
-            {{ form.content.label_tag }}
-            {{ form.content }}  <!-- Campo de contenido -->
+            <label for="{{ form.content.id_for_label }}" class="form-label">Contenido:</label>
+            {{ form.content }}
             {{ form.content.errors }}
         </div>
 
+        <!-- Campo de categoría -->
         <div class="form-group">
-            {{ form.category.label_tag }}
-            {{ form.category }}  <!-- Campo de categoría -->
+            <label for="{{ form.category.id_for_label }}" class="form-label">Categoría:</label>
+            {{ form.category }}
             {{ form.category.errors }}
         </div>
 
+        <!-- Campo de etiquetas (tags) -->
         <div class="form-group">
-            {{ form.tags.label_tag }}
-            {{ form.tags }}  <!-- Este generará las casillas de verificación -->
+            <label for="{{ form.tags.id_for_label }}" class="form-label">Etiquetas:</label>
+            <div class="tags-container">
+                {{ form.tags }}
+            </div>
             {{ form.tags.errors }}
         </div>
 
+        <!-- Campo de imagen -->
         <div class="form-group">
-            {{ form.image.label_tag }}
-            {{ form.image }}  <!-- Campo de imagen -->
+            <label for="{{ form.image.id_for_label }}" class="form-label">Imagen:</label>
+            <div class="image-upload">
+                {{ form.image }}
+            </div>
             {{ form.image.errors }}
         </div>
 
+        <!-- Botón de enviar -->
         <button type="submit" class="btn-submit">Publicar</button>
     </form>
 </main>
-
-<script src="../../static/js/create_post.js"></script>
+<script src="{% static 'js/create_post.js' %}"></script>
 
 {% endblock %}

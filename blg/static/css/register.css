@@ -1,36 +1,64 @@
-/* Asegúrate de que esto esté en tu archivo CSS que se carga */
-.container {
+/* Contenedor principal */
+.register-container {
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Centrar verticalmente */
-    align-items: center; /* Centrar horizontalmente */
-    height: 110vh; /* Ocupa toda la altura de la ventana */
-    padding: 20px; /* Espacio interno */
+    justify-content: center;
+    align-items: center;
+    height: 110vh;
+    padding: 20px;
 }
 
-form {
-    background-color: #fff; /* Fondo blanco para el formulario */
-    padding: 20px; /* Espacio interno del formulario */
-    border-radius: 10px; /* Bordes redondeados */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra sutil */
-    width: 100%; /* Ancho completo */
-    max-width: 400px; /* Ancho máximo */
+/* Estilo del formulario */
+.register-form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
 }
 
 /* Alineación de las etiquetas y campos del formulario */
-.mb-3 {
-    margin-bottom: 15px; /* Espaciado entre los campos */
+.register-field {
+    margin-bottom: 15px;
 }
 
-label {
-    margin-bottom: 5px; /* Espaciado entre etiqueta y campo */
+.register-label {
+    margin-bottom: 5px;
+}
+
+.register-input,
+.register-textarea,
+.register-file-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
 
 /* Estilo del botón */
-.btn {
-    width: 100%; /* Ancho completo del botón */
-    padding: 10px; /* Padding del botón */
-    font-size: 16px; /* Tamaño de la fuente */
-    border-radius: 5px; /* Bordes redondeados */
-    cursor: pointer; /* Cambia el cursor al pasar por encima */
+.register-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.register-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Estilo para el enlace de retorno */
+.register-back-link a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.register-back-link a:hover {
+    text-decoration: underline;
 }

@@ -1,95 +1,25 @@
-.container {
-    margin-top: 60px;
-    max-width: 900px; /* Limita el ancho máximo */
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra sutil para darle profundidad */
-}
-
-.row {
-    display: flex;
-    align-items: center; /* Alinea verticalmente */
-    justify-content: center; /* Centra horizontalmente */
-}
-
-.col-md-4 {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-right: 30px;
-}
-
-.img-thumbnail {
-    width: 180px;
-    height: 180px;
-    object-fit: cover;
-    border-radius: 50%;
-    margin-bottom: 20px;
-    border: 3px solid #ccc; /* Añade un borde para resaltar la imagen */
-}
-
-h2 {
-    font-size: 28px; /* Ajusta el tamaño del título */
-    font-weight: bold;
-    text-align: left;
-    color: #333;
-    margin-bottom: 20px;
-}
-
-h3 {
-    font-size: 20px;
-    font-weight: bold;
-    color: #444;
-    margin-top: 30px;
-    margin-bottom: 15px;
-}
-
-form {
-    width: 100%;
-}
-
-.form-control {
-    margin-bottom: 20px;
-    padding: 12px;
-    font-size: 16px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05); /* Sombra interna */
-}
-
-textarea.form-control {
-    resize: none;
-    height: 120px;
-}
-
-button.btn {
-    width: 100%;
-    padding: 12px;
-    font-size: 18px;
+.custom-file-upload {
+    display: inline-block;
+    cursor: pointer;
     background-color: #007bff;
     color: white;
-    border: none;
+    padding: 10px 20px;
     border-radius: 5px;
+    font-size: 14px;
+    text-align: center;
     transition: background-color 0.3s ease;
 }
 
-button.btn:hover {
-    background-color: #0056b3; /* Color al hacer hover */
+.custom-file-upload:hover {
+    background-color: #0056b3;
 }
 
-.btn-secondary {
-    width: 100%;
-    padding: 12px;
-    font-size: 18px;
-    background-color: #6c757d;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    margin-top: 10px;
-    transition: background-color 0.3s ease;
+.custom-file-upload input {
+    display: none;
 }
 
-.btn-secondary:hover {
-    background-color: #5a6268;
+.file-name {
+    margin-left: 10px;
+    font-size: 14px;
+    color: #6c757d;
 }

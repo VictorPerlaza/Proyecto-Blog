@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <link rel="stylesheet" href="../../static/css/search.css">
+
+    <div class="container mt-4">
+        <h2 class="search-results-title">Resultados para "{{ query }}"</h2>
+
+        <!-- Resultados de Posts -->
+        <div class="search-section">
+            <h3 class="search-section-title">Posts:</h3>
+            {% if posts %}
+                <div class="search-results-list">
+                    {% for post in posts %}
+                        <div class="search-result-item">
+                            <a href="{% url 'post_detail' post.id %}" class="search-result-link">
+                                <h4 class="search-result-title">{{ post.title }}</h4>
+                                <p class="search-result-excerpt">{{ post.content|truncatewords:20 }}</p>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="search-no-results">No se encontraron posts.</p>
+            {% endif %}
+        </div>
+
+        <!-- Resultados de Usuarios -->
+        <div class="search-section">
+            <h3 class="search-section-title">Usuarios:</h3>
+            {% if users %}
+                <div class="search-results-list">
+                    {% for user in users %}
+                        <div class="search-result-item">
+                            <a href="{% url 'profile_detail_user' user.id %}" class="search-result-link">
+                                <div class="user-result">
+                                    <img src="{{ user.author.avatar.url }}" alt="{{ user.username }}" class="user-avatar">
+                                    <span class="username">{{ user.username }}</span>
+                                </div>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="search-no-results">No se encontraron usuarios.</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

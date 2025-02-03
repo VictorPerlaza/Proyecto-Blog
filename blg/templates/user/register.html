@@ -8,44 +8,38 @@
 
 {% block content %}
 
-<title>Register</title>
+<title>Registro</title>
 
 <link rel="stylesheet" type="text/css" href="../../static/css/register.css">
 
-<div class="container">
+<div class="register-container">
 
-<form method="post" enctype="multipart/form-data">  <!-- Asegúrate de agregar el enctype -->
+<form method="post" enctype="multipart/form-data" class="register-form">
   {% csrf_token %}
-    <div class="mb-3">
-      <label for="exampleInputEmail1" class="form-label">Email address</label>
-      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email" required>
+    <div class="register-field">
+      <label for="register-email" class="register-label">Correo Electrónico</label>
+      <input type="email" class="register-input" id="register-email" aria-describedby="emailHelp" name="email" required>
     </div>
-    <div class="mb-3">
-      <label for="exampleInputPassword1" class="form-label">Password</label>
-      <input type="password" class="form-control" id="exampleInputPassword1" name="password" required>
+    <div class="register-field">
+      <label for="register-password" class="register-label">Contraseña</label>
+      <input type="password" class="register-input" id="register-password" name="password" required>
     </div>
-    <div class="mb-3">
-      <label for="exampleInputUsername" class="form-label">Username</label>
-      <input type="text" class="form-control" id="exampleInputUsername" name="username" required>
+    <div class="register-field">
+      <label for="register-username" class="register-label">Nombre de Usuario</label>
+      <input type="text" class="register-input" id="register-username" name="username" required>
     </div>
-    <div class="mb-3">
-      <label for="exampleFormControlTextarea1" class="form-label">Biografía</label>
-      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Escribe una breve descripción sobre ti" name="bio"></textarea>
+    <div class="register-field">
+      <label for="register-bio" class="register-label">Biografía</label>
+      <textarea class="register-textarea" id="register-bio" rows="3" placeholder="Escribe una breve descripción sobre ti" name="bio"></textarea>
     </div>
-    <div class="mb-3">
-      <label for="avatar" class="form-label">Avatar</label>
-      <input type="file" class="form-control-file" id="avatar" name="avatar" accept="image/*"> <!-- Campo para el avatar -->
+    <div class="register-field">
+      <label for="register-avatar" class="register-label">Avatar</label>
+      <input type="file" class="register-file-input" id="register-avatar" name="avatar" accept="image/*">
     </div>
-    <button type="submit" class="btn btn-primary">Register</button>
-  </form>
-  <p><a href="{% url 'login' %}">Volver</a></p>
+    <button type="submit" class="register-btn">Registrar</button>
+</form>
+<p class="register-back-link"><a href="{% url 'login' %}">Volver</a></p>
 
 </div>
 
 {% endblock %}
-
-
-
-
-
-

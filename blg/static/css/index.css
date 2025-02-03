@@ -1,207 +1,183 @@
-/* Reset */
+/* Estilos generales */
 body {
     font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;  
-}
-
-/* Navbar */
-header {
-    background-color: white;
+    background-color: #f4f4f9;
     color: #333;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-.logo {
-    font-size: 24px;
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
 }
 
-.navbar-brand {
-    color: #333;
-    text-decoration: none;
-}
-
-.navbar-right {
+/* Banner Superior */
+/* Banner Superior */
+.banner {
+    background-image: url('{% static "images/banner-background.jpg" %}'); /* Imagen de fondo */
+    background-size: cover;
+    background-position: center;
+    padding: 60px 20px; /* Reducimos el padding para que el banner sea más compacto */
+    text-align: center;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    min-height: 300px; /* Altura mínima para asegurar que el contenido sea visible */
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
-/* Botón Crear Post */
-.btn-create-post {
+.banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Overlay oscuro para mejorar la legibilidad */
+    z-index: 1;
+}
+
+.banner-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px; /* Limita el ancho del contenido para que no se vea demasiado extendido */
+}
+
+.banner-title {
+    font-size: 2.5rem; /* Reducimos el tamaño de la fuente para pantallas más pequeñas */
+    font-weight: bold;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Sombra para el texto */
+}
+
+.banner-text {
+    font-size: 1.1rem; /* Reducimos el tamaño de la fuente para pantallas más pequeñas */
+    margin-bottom: 1.5rem;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); /* Sombra para el texto */
+}
+
+.banner-button {
     background-color: #007BFF;
     color: white;
-    padding: 10px 15px;
-    border: none;
+    padding: 10px 20px; /* Reducimos el padding para que el botón sea más compacto */
     border-radius: 5px;
     text-decoration: none;
-    margin-right: 20px;
-    transition: background-color 0.3s;
-}
-
-.btn-create-post:hover {
-    background-color: #0056b3;
-}
-
-/* Contenido Principal */
-.main-content {
-    padding: 20px;
-    margin-top: 20px;
-}
-
-/* Hero Section */
-.hero-section {
-    background-color: #f0f8f7;
-    padding: 2rem;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.hero-title {
-    font-size: 2.5rem;
+    transition: background-color 0.3s, transform 0.3s;
+    font-size: 1rem;
     font-weight: bold;
 }
 
-.hero-button {
-    margin-top: 1rem;
-    background-color: #007BFF;
-    color: white;
-    padding: 10px 15px;
-    border-radius: 5px;
-    text-decoration: none;
-    transition: background-color 0.3s;
-}
-
-.hero-button:hover {
+.banner-button:hover {
     background-color: #0056b3;
+    transform: translateY(-3px); /* Efecto de elevación al hacer hover */
 }
 
-/* Banner */
-.banner {
-    color: white;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    padding: 50px 20px;
-    border-bottom: 1px solid #ccc;
-    margin-top: 20px;
-    background-image: url('banner.jpg');
+/* Ajustes para pantallas pequeñas */
+@media (max-width: 768px) {
+    .banner {
+        padding: 40px 15px; /* Reducimos aún más el padding en móviles */
+        min-height: 250px; /* Altura mínima más pequeña para móviles */
+    }
+
+    .banner-title {
+        font-size: 2rem; /* Tamaño de fuente más pequeño para móviles */
+    }
+
+    .banner-text {
+        font-size: 1rem; /* Tamaño de fuente más pequeño para móviles */
+    }
+
+    .banner-button {
+        padding: 8px 16px; /* Botón más compacto en móviles */
+    }
 }
 
 /* Sección de Posts */
-.posts {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 20px;
+.posts-section {
+    margin-top: 40px;
 }
 
-.post {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-}
-
-.post.animate {
-    opacity: 1;
-    transform: translateY(0);
+.posts-section h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #222;
+    margin-bottom: 20px;
 }
 
 .card {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-}
-
-.card-img-top, .post img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 5px 5px 0 0;
-}
-
-/* Enlace Leer Más */
-.leer-mas {
-    display: inline-block;
-    margin-top: 10px;
-    color: #007BFF;
-    text-decoration: none;
-}
-
-/* Sección Popular */
-.popular-section {
-    background-color: #f7f9fa;
-    padding: 1rem;
-}
-
-.popular-post {
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%; /* Asegura que todas las tarjetas tengan la misma altura */
     display: flex;
-    align-items: center;
+    flex-direction: column;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.card img {
+    width: 100%;
+    height: 200px; /* Altura fija para las imágenes */
+    object-fit: cover; /* Asegura que la imagen cubra el espacio sin deformarse */
+}
+
+.card-body {
+    padding: 1.5rem;
+    flex: 1; /* Hace que el cuerpo de la tarjeta ocupe el espacio restante */
+    display: flex;
+    flex-direction: column;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #222;
+    margin-bottom: 0.75rem;
+}
+
+.card-text {
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 1rem;
+    flex: 1; /* Hace que el texto ocupe el espacio restante */
+}
+
+.fecha {
+    font-size: 0.8rem;
+    color: #777;
     margin-bottom: 1rem;
 }
 
-.popular-post img {
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
-    margin-right: 1rem;
+.btn-primary {
+    background-color: #007BFF;
+    border: none;
+    padding: 8px 16px;
     border-radius: 5px;
-}
-
-/* Footer */
-footer {
-    background-color: #333;
+    text-decoration: none;
     color: white;
-    text-align: center;
-    padding: 10px 0;
+    transition: background-color 0.3s;
+    align-self: flex-start; /* Alinea el botón a la izquierda */
 }
 
-/* Redes Sociales en el Footer */
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+
 .social a {
     margin: 0 10px;
     color: white;
     text-decoration: none;
+    font-size: 1.2rem;
 }
 
-/* Menú Desplegable del Usuario */
-.user-menu {
-    position: relative;
-}
-
-.user-menu .avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    cursor: pointer;
-    border: 2px solid #007BFF;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    right: 0;
-    background-color: #fff;
-    color: #333;
-    min-width: 120px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-    z-index: 1;
-}
-
-.user-menu:hover .dropdown-content {
-    display: block;
-}
-
-.dropdown-content a {
-    color: #333;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-}
-
-.dropdown-content a:hover {
-    background-color: #f1f1f1;
+.social a:hover {
+    color: #007BFF;
 }

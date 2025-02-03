@@ -1,0 +1,88 @@
+.post-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background: #fff;
+    height: 100%;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+/* Efecto de agrandamiento al pasar el mouse */
+.post-card:hover {
+    transform: scale(1.05); /* Aumenta el tamaño un 5% */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Aumenta la sombra */
+}
+
+
+/* Imagen dentro de la tarjeta */
+.post-img {
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+}
+
+/* Contenedor del título y el contenido */
+.post-content {
+    flex: 1; /* Hace que el contenido crezca para igualar alturas */
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Título del post */
+.post-title {
+    min-height: 50px; /* Ajusta este valor según necesites */
+    font-size: 18px;
+    font-weight: bold;
+    overflow: hidden;
+}
+
+/* Botón o pie de tarjeta */
+.post-footer {
+    margin-top: auto; /* Empuja el pie de tarjeta hacia abajo */
+    padding: 10px;
+    text-align: center;
+}
+
+
+.pagination {
+display: flex;
+justify-content: center; /* Centra los enlaces de la paginación horizontalmente */
+list-style: none; /* Elimina los puntos de las listas */
+padding: 10px;
+margin-top: 20px; /* Espacio superior para separación */
+}
+
+.pagination a, .pagination span {
+margin: 0 5px;
+padding: 8px 12px;
+text-decoration: none;
+color: #007bff;
+border: 1px solid #ddd;
+border-radius: 5px;
+transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.pagination a:hover {
+background-color: #007bff;
+color: white;
+}
+
+.pagination a.active {
+background-color: #007bff;
+color: white;
+pointer-events: none; /* Desactiva clics en la página activa */
+}
+
+.pagination a.disabled {
+color: #ccc;
+pointer-events: none; /* Desactiva clics en enlaces deshabilitados */
+}
+
+
+.url_post{
+    text-decoration: none;
+}

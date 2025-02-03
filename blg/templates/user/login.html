@@ -2,37 +2,31 @@
 {% load static %}
 
 {% block js %}
-
-
 {% endblock %}
 
 {% block content %}
-<title>Login</title>
+<title>Iniciar Sesión</title>
 
-<link rel="stylesheet" type="text/css" href="../../static/css/register.css">
+<link rel="stylesheet" type="text/css" href="../../static/css/login.css">
 
-<div class="container">
-    <h2>Login</h2>
+<div class="login-container">
+    <h2>Iniciar Sesión</h2>
 
-    <!-- Formulario de login -->
-    <form method="post">
+    <!-- Formulario de inicio de sesión -->
+    <form method="post" class="login-form">
         {% csrf_token %}
-        <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Username</label>
-            <input type="text" class="form-control" id="exampleInputEmail1" name="username" required>
+        <div class="form-group">
+            <label for="usernameInput" class="form-label">Nombre de Usuario</label>
+            <input type="text" class="form-input" id="usernameInput" name="username" required>
         </div>
-        <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1" name="password" required>
+        <div class="form-group">
+            <label for="passwordInput" class="form-label">Contraseña</label>
+            <input type="password" class="form-input" id="passwordInput" name="password" required>
         </div>
-        <button type="submit" class="btn btn-primary">Login</button>
+        <button type="submit" class="btn btn-primary">Ingresar</button>
     </form>
 
-    <!-- Link a la página de registro (o cualquier otra página) -->
-    <p><a href="{% url 'register' %}">No tienes cuenta? Regístrate</a></p>
+    <!-- Link a la página de registro -->
+    <p><a href="{% url 'register' %}">¿No tienes cuenta? Regístrate</a></p>
 </div>
-
-
-
-
 {% endblock %}

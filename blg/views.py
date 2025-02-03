@@ -1,185 +1,218 @@
+# Importaciones necesarias
 from django.http import HttpResponse
-from django.shortcuts import render , get_object_or_404 , redirect
-from django.contrib.auth import login as lg , logout , authenticate
-from django.contrib import messages
-from django.contrib.auth.models import User 
-from django.contrib.auth.decorators import login_required
-from django.views.generic import DetailView
-from django.contrib.auth.forms import AuthenticationForm
-from .forms import UserProfileForm , AuthorProfileForm , PostForm
-from django.views.generic import DetailView
-from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
-from .models import Post, Comment, Author
-import pytz
+from django.shortcuts import render, get_object_or_404, redirect  # Para manejar vistas y redirecciones
+from django.contrib.auth import login as lg, logout, authenticate  # Funciones de autenticación
+from django.contrib import messages  # Para mostrar mensajes de feedback al usuario
+from django.contrib.auth.models import User  # Modelo de usuario predeterminado de Django
+from django.contrib.auth.decorators import login_required  # Decorador para proteger vistas
+from django.views.generic import DetailView  # Vista basada en clase para detalles
+from django.contrib.auth.forms import AuthenticationForm  # Formulario de autenticación de Django
+from .forms import UserProfileForm, AuthorProfileForm, PostForm  # Formularios personalizados
+from .models import Post, Comment, Author, Notification, Reaction  # Modelos utilizados
+from django.core.paginator import Paginator # Paginación 
+import pytz  # Biblioteca para manejar zonas horarias
 
-# Create your views here.
 
 def index(request):
-    posts = Post.objects.filter(published=True)
-    
+    posts = Post.objects.filter(published=True).order_by('published')[:6]  # Filtra solo los posts publicados y toma los 6 más recientes
     if request.user.is_authenticated:
+        # Si el usuario está autenticado, muestra un mensaje de bienvenida y cuenta notificaciones no leídas
         messages.info(request, f"¡Bienvenido, {request.user.username}!")
+        unread_notifications_count = request.user.notifications.filter(is_read=False).count()
+        # Pasar el conteo de notificaciones no leídas si es necesario
+        return render(request, 'index.html', {'recent_posts': posts, 'unread_notifications_count': unread_notifications_count})
     
-    print(posts)  # Verifica si hay posts capturados
-    return render(request, 'index.html', {'recent_posts': posts})
+    return render(request, 'index.html', {'recent_posts': posts})  # Renderiza la plantilla con los posts
 
 
+# Vista para iniciar sesión
 def login(request):
-    # Verificar si la solicitud es de tipo POST (cuando el usuario envía el formulario)
     if request.method == 'POST':
-        # Crea una instancia del formulario de autenticación con los datos del POST
+        # Si es una solicitud POST, intenta autenticar al usuario con los datos proporcionados
         form = AuthenticationForm(request, data=request.POST)
-        
-        # Validar si el formulario es correcto (credenciales válidas)
         if form.is_valid():
-            # Obtener los datos de usuario del formulario
             username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password') 
-            
-            # Autenticar el usuario con el método 
+            password = form.cleaned_data.get('password')
             user = authenticate(request, username=username, password=password)
-            
-            # Si el usuario es autenticado correctamente
             if user is not None:
-                # Inicia sesión con el método login
-                lg(request, user)
-                # Redirige al usuario a la página de inicio 
-                return redirect('index')
+                lg(request, user)  # Inicia sesión
+                return redirect('index')  # Redirige a la página principal
             else:
-                # Si no se encuentra al usuario, agrega un mensaje de error
                 messages.error(request, 'Usuario o contraseña incorrectos.')
         else:
-            # Si el formulario no es válido, agrega un mensaje de error
             messages.error(request, 'Datos inválidos.')
-    
-    # Si la solicitud es GET (el usuario simplemente visita la página), muestra el formulario
     else:
+        # Si es GET, muestra el formulario vacío
         form = AuthenticationForm()
-
-    # Renderiza la página de login con el formulario
     return render(request, 'user/login.html', {'form': form})
 
-
+# Vista para registrar un nuevo usuario
 def register(request):
-    if request.method == 'POST': #obtener valores del forms 
+    if request.method == 'POST':  # Si se envió el formulario
         username = request.POST['username']
         email = request.POST['email']
         password = request.POST['password']
-        bio = request.POST.get('bio', '')
-        avatar = request.FILES.get('avatar')  
-        # Validaciones
+        bio = request.POST.get('bio', '')  # Biografía opcional
+        avatar = request.FILES.get('avatar')  # Avatar opcional
+        # Verifica si el nombre de usuario o correo ya existen
         if User.objects.filter(username=username).exists():
-            messages.error(request, 'El nombre de usuario ya está en uso. Por favor, elige otro.')
-            return redirect('register') 
-
+            messages.error(request, 'El nombre de usuario ya está en uso.')
+            return redirect('register')
         if User.objects.filter(email=email).exists():
             messages.error(request, 'Ya hay una cuenta registrada con este email.')
             return redirect('register')
-
-        # Crea el usuario
+        # Crea el usuario y el autor asociado
         user = User.objects.create_user(username=username, email=email, password=password)
-
-        # Crea el autor con la biografía y el avatar
         Author.objects.create(user=user, bio=bio, avatar=avatar)
+        messages.success(request, 'Tu cuenta ha sido creada exitosamente.')
+        return redirect('login')  # Redirige a la página de inicio de sesión
+    return render(request, 'user/register.html')  # Muestra el formulario
 
-        messages.success(request, 'Tu cuenta ha sido creada exitosamente. Puedes iniciar sesión ahora.')
-        return redirect('login')  
-    return render(request, 'user/register.html')  
-
-
-
+# Vista protegida para editar el perfil del usuario
 @login_required
 def profile(request):
-    user_form = UserProfileForm(instance=request.user)
-    author_form = AuthorProfileForm(instance=request.user.author)
-
+    user_form = UserProfileForm(instance=request.user)  # Formulario para el modelo User
+    author_form = AuthorProfileForm(instance=request.user.author)  # Formulario para el modelo Author
     if request.method == 'POST':
-        # Obtén los formularios con los datos de la solicitud
+        # Si se envió el formulario, valida y guarda los datos
         user_form = UserProfileForm(request.POST, instance=request.user)
         author_form = AuthorProfileForm(request.POST, request.FILES, instance=request.user.author)
-
-        # Variables para las contraseñas
-        current_password = request.POST.get('current_password')
-        new_password = request.POST.get('new_password')
-        confirm_password = request.POST.get('confirm_password')
-
-        # Verificamos si el formulario de usuario y autor son válidos
+        current_password = request.POST.get('current_password')  # Contraseña actual
+        new_password = request.POST.get('new_password')  # Nueva contraseña
+        confirm_password = request.POST.get('confirm_password')  # Confirmación
         if user_form.is_valid() and author_form.is_valid():
-            # Si se proporciona una contraseña actual, validamos
-            if current_password:
-                # Verificamos la contraseña actual
-                if request.user.check_password(current_password):
-                    # Verificamos si la nueva contraseña coincide con la confirmación
-                    if new_password == confirm_password:
-                        # Cambia la contraseña
-                        request.user.set_password(new_password)
-                        request.user.save()  # Guarda el usuario después de cambiar la contraseña
-                    else:
-                        messages.error(request, "Las nuevas contraseñas no coinciden.")
-                        return render(request, 'user/profile.html', {'user_form': user_form, 'author_form': author_form})
-
+            if current_password and request.user.check_password(current_password):
+                if new_password == confirm_password:
+                    request.user.set_password(new_password)
+                    request.user.save()  # Guarda los cambios
                 else:
-                    messages.error(request, "Contraseña actual incorrecta.")
+                    messages.error(request, "Las nuevas contraseñas no coinciden.")
                     return render(request, 'user/profile.html', {'user_form': user_form, 'author_form': author_form})
-
-            # Guarda los cambios en los formularios si no hay errores
-            user_form.save()  # Guarda los cambios del usuario
-            author_form.save()  # Guarda los cambios del autor
-
+            user_form.save()
+            author_form.save()
             messages.success(request, 'Tu perfil ha sido actualizado exitosamente.')
-            return redirect('profile')  # Cambia 'profile' por el nombre correcto de la URL
+            return redirect('profile')  # Redirige al perfil
+    return render(request, 'user/profile.html', {'user_form': user_form, 'author_form': author_form})
 
-    context = {
-        'user_form': user_form,
-        'author_form': author_form,
-    }
-    return render(request, 'user/profile.html', context)  # Usa la plantilla correcta
+# Vista para mostrar detalles del perfil de otro usuario
 
+def profile_detail_users(request, user_id):
+    # Si el user_id coincide con el usuario autenticado, redirige al perfil del usuario autenticado
+    if user_id == request.user.id:
+        profile_user = request.user.author  # Accede al perfil del usuario autenticado (su autor)
+    else:
+        # Si el user_id no coincide, busca al autor por ID
+        profile_user = get_object_or_404(Author, user__id=user_id)  # Obtiene el autor relacionado con el user_id
 
+    posts = profile_user.post_set.all()  # Obtiene los posts del autor
+
+    return render(request, 'user/profile_detail.html', {
+        'profile_user': profile_user,  # Usuario cuyo perfil se está viendo
+        'posts': posts,
+        'user': request.user  # Usuario autenticado
+    })
+
+# Vista protegida para crear un post
 @login_required
 def create_post(request):
     if request.method == 'POST':
-        form = PostForm(request.POST, request.FILES)
+        form = PostForm(request.POST, request.FILES)  # Formulario para crear un post
         if form.is_valid():
             post = form.save(commit=False)
-            author = get_object_or_404(Author, user=request.user)
+            author = get_object_or_404(Author, user=request.user)  # Obtiene el autor asociado al usuario
             post.author = author
-            post.save()  # Guarda el post primero
-            form.save_m2m()  # Guarda las relaciones ManyToMany
-            return redirect('index')
+            post.save()
+            form.save_m2m()  # Guarda relaciones ManyToMany
+            return redirect('index')  # Redirige a la página principal
     else:
-        form = PostForm()
-    
+        form = PostForm()  # Muestra el formulario vacío
     return render(request, 'user/create_post.html', {'form': form})
 
-
-
-
+# Clase para mostrar los detalles de un post
 class PostDetailView(DetailView):
     model = Post
     template_name = 'user/post_detail.html'
     context_object_name = 'post'
 
     def get_context_data(self, **kwargs):
+        # Agrega los comentarios aprobados al contexto
         context = super().get_context_data(**kwargs)
         context['comments'] = self.object.comments.filter(approved=True)
         return context
 
     def post(self, request, *args, **kwargs):
-        # Verifica si el usuario está autenticado antes de procesar el comentario
+        # Permite agregar comentarios a un post
         if not request.user.is_authenticated:
-            return redirect('login')  # Redirige al inicio de sesión si no está autenticado
-                # Convierte la hora de cada comentario a la zona horaria del usuario
-
-        post = self.get_object()
-        content = request.POST.get('content')
-        author = Author.objects.get(user=request.user)
+            return redirect('login')  # Si no está autenticado, redirige al inicio de sesión
+        post = self.get_object()  # Obtiene el post actual
+        content = request.POST.get('content')  # Contenido del comentario
+        author = Author.objects.get(user=request.user)  # Autor del comentario
         Comment.objects.create(post=post, author=author, content=content)
-        return redirect(self.request.path)
+        return redirect(self.request.path)  # Recarga la página
+
+# Otras funciones están estructuradas de manera similar
+# Se explican en detalle sus respectivas responsabilidades
+
+def add_comment(request, post_id):
+    if request.method == 'POST':
+        post = get_object_or_404(Post, id=post_id)
+        author = request.user.author
+        content = request.POST.get('content')
+        
+        # Crear el comentario
+        comment = Comment.objects.create(post=post, author=author, content=content)
+        
+        # Crear una notificación para el autor de la publicación
+        Notification.objects.create(
+            user=post.author.user,
+            message=f"{request.user.username} comentó en tu publicación '{post.title}'"
+        )
+        
+        return redirect('post_detail', post_id=post.id)
 
 
+def search(request):
+    query = request.GET.get('q', '')  # Obtiene la consulta de la barra de búsqueda
+    posts = Post.objects.filter(title__icontains=query) if query else None
+    users = User.objects.filter(username__icontains=query) if query else None
 
+    context = {
+        'query': query,
+        'posts': posts,
+        'users': users
+    }
+    return render(request, 'user/buscar.html', context)
+
+@login_required
+def react_to_post(request, post_id, reaction_type):
+    post = get_object_or_404(Post, id=post_id)
+    
+    # Verifica si el usuario ya ha reaccionado al post
+    existing_reaction = Reaction.objects.filter(post=post, user=request.user).first()
+    
+    if existing_reaction:
+        # Si ya reaccionó, actualiza el tipo de reacción
+        existing_reaction.reaction_type = reaction_type
+        existing_reaction.save()
+    else:
+        # Si no ha reaccionado, crea una nueva reacción
+        Reaction.objects.create(post=post, user=request.user, reaction_type=reaction_type)
+    
+    return redirect('post_detail', pk=post.id)
+
+@login_required
+def notifications(request):
+    notifications = request.user.notifications.filter(is_read=False)
+    return render(request, 'user/notificaciones.html', {'notifications': notifications})
+
+def exp_posts(request):
+    posts = Post.objects.all().order_by('published')  # Ordena por fecha (más reciente primero)
+    paginator = Paginator(posts, 9)  # Muestra 9 publicaciones por página
+
+    page_number = request.GET.get('page')  # Obtén el número de página de la URL
+    page_obj = paginator.get_page(page_number)  # Obtén la página actual
+
+    return render(request, 'user/ex-post.html', {'page_obj': page_obj})
 
 def cerrar(request):
     if request.user.is_authenticated:

@@ -1,5 +1,5 @@
-/* Contenedor principal */
-.container {
+/* Contenedor principal del login */
+.login-container {
     display: flex;
     flex-direction: column;
     justify-content: center; /* Centra verticalmente */
@@ -9,7 +9,7 @@
 }
 
 /* Estilo del formulario */
-form {
+.login-form {
     background-color: #fff; /* Fondo blanco para el formulario */
     padding: 20px; /* Espacio interno del formulario */
     border-radius: 10px; /* Bordes redondeados */
@@ -19,16 +19,33 @@ form {
 }
 
 /* Alineación de las etiquetas y campos del formulario */
-.mb-3 {
+.form-group {
     margin-bottom: 15px; /* Espaciado entre los campos */
 }
 
-label {
+.form-label {
     margin-bottom: 5px; /* Espaciado entre etiqueta y campo */
+    font-size: 14px;
+    color: #666666;
 }
 
-/* Estilo del botón */
-button {
+.form-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    color: #333333;
+    border: 1px solid #dddddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+/* Estilo del botón de inicio de sesión */
+.btn-primary {
     width: 100%; /* Ancho completo del botón */
     padding: 10px; /* Padding del botón */
     background-color: #007bff; /* Color de fondo */
@@ -36,18 +53,20 @@ button {
     border: none; /* Sin borde */
     border-radius: 5px; /* Bordes redondeados */
     cursor: pointer; /* Cursor de mano al pasar por encima */
+    font-size: 16px;
+    transition: background-color 0.3s ease;
 }
 
-button:hover {
+.btn-primary:hover {
     background-color: #0056b3; /* Color de fondo al pasar el ratón */
 }
 
-/* Estilo para el enlace */
-p a {
+/* Estilo para el enlace de registro */
+.login-container p a {
     color: #007bff;
     text-decoration: none;
 }
 
-p a:hover {
+.login-container p a:hover {
     text-decoration: underline; /* Subrayado al pasar el ratón */
 }

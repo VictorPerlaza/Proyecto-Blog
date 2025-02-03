@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<title>{{user.username}}</title>
+
+<link rel="stylesheet" href="../../static/css/ud.css">
+
+
+<div class="profile-header">
+    <div class="header-bg"></div>
+    <div class="profile-info">
+        <img src="{{ profile_user.avatar.url }}" alt="{{ profile_user.username }}" class="profile-avatar">
+
+        <h2>{{ profile_user.user }}</h2>
+        <p class="bio">{{ profile_user.bio }}</p> <!-- Muestra la biografía del usuario -->
+        <div class="profile-stats">
+            <div class="stat">
+                <span class="stat-number">{{ profile_user.comment_count }}</span>
+                <span class="stat-label">Comentarios</span>
+            </div>
+            <div class="stat">
+                <span class="stat-number">{{ profile_user.followers_count }}</span>
+                <span class="stat-label">Seguidores</span>
+            </div>
+            <div class="stat">
+                <span class="stat-number">{{ profile_user.following_count }}</span>
+                <span class="stat-label">Siguiendo</span>
+            </div>
+        </div>
+        <button class="follow-button">Seguir</button>
+    </div>
+</div>
+
+<div class="profile-content">
+    <h3 class="profile-posts-title">Posts Publicados</h3>
+    {% if profile_user.post_set.all %}
+        <div class="post-list">
+            {% for post in profile_user.post_set.all %}
+                <div class="post-item">
+                    <h4 class="post-title">{{ post.title }}</h4>
+                    <p class="post-content">{{ post.content|truncatewords:20 }}</p> <!-- Muestra una parte del contenido del post -->
+                    <div class="post-footer">
+                        <span class="post-date">Publicado el {{ post.created_at|date:"d M Y" }}</span>
+                        <a href="{% url 'post_detail' post.id %}" class="view-discussion">Ver en discusión</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="no-posts">Este usuario aún no ha publicado ningún post.</p>
+    {% endif %}
+</div>
+
+{% endblock %}

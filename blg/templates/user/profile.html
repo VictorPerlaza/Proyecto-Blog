@@ -22,9 +22,12 @@
 
                 <div class="mb3">
                     <p>Upload your photo...</p>
-                     <input type="file" name="avatar" class="form-control-file">
+                    <label class="custom-file-upload">
+                        <input type="file" name="avatar" class="form-control-file" onchange="updateFileName(this)">
+                        Choose File
+                    </label>
                 </div>
-
+                
                 <div class="mb-3">
                     <label for="username">Username</label>
                     <input type="text" class="form-control" name="username" id="username" value="{{ user_form.username.value|default:user.username }}" required>
@@ -53,8 +56,8 @@
                     <label for="bio">Biography</label>
                     <textarea name="bio" class="form-control" id="bio" rows="4">{{ author_form.bio.value|default:user.author.bio }}</textarea>
                 </div>
-                <button type="submit" class="btn btn-primary">Actualizar</button>
-                <a href="{% url 'index' %}" class="btn btn-secondary">Cancelar</a>
+                <button type="submit" class="btn btn-primary">update</button>
+                <a href="{% url 'index' %}" class="btn btn-secondary">Cancel</a>
             </form>
         </div>
     </div>

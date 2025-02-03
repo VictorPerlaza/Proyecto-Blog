@@ -1,68 +1,116 @@
-/* Navbar personalizado */
+/* Estilos Generales */
 .custom-navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: white; /* Fondo blanco */
-    color: #333;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-    padding: 5px 0; /* Reduce el grosor del navbar */
+    background-color: #1c1c1c; /* Fondo oscuro */
+    padding: 10px 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 
-.custom-main-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 20px;
-}
-
-.custom-navbar .navbar-brand {
-    display: flex;
-    align-items: center;
-    color: #333;
+/* Logo */
+.navbar-brand {
+    color: #f78c1e;
     font-weight: bold;
-    text-decoration: none;
-    margin-right: auto; /* Alinea el nombre e icono a la izquierda */
-}
-
-.custom-navbar .navbar-brand i {
-    margin-right: 10px;
-}
-
-.custom-user-menu {
     display: flex;
     align-items: center;
 }
 
-.custom-avatar {
+.navbar-brand i {
+    margin-right: 8px;
+}
+
+/* Menú Central */
+.navbar-nav .nav-link {
+    color: white;
+    font-size: 1rem;
+    margin: 0 10px;
+    transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #f78c1e;
+}
+
+/* Iconos a la Derecha */
+.navbar-icons {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.nav-icon {
+    color: white;
+    font-size: 1.2rem;
+    text-decoration: none;
+}
+
+.nav-icon:hover {
+    color: #f78c1e;
+}
+
+/* Avatar */
+.navbar-avatar {
     width: 40px;
     height: 40px;
     border-radius: 50%;
     cursor: pointer;
 }
 
-/* Ajustes para el contenido principal */
-.custom-content-offset {
-    margin-top: 60px; /* Ajuste de margen para compensar el navbar */
+/* Dropdown */
+.dropdown-menu {
+    background-color: #2a2a2a;
+    border: none;
 }
 
-/* Ajustes adicionales */
-.navbar-nav .nav-link {
-    color: #333;
-    font-weight: 500;
-    padding: 0 10px;
+.dropdown-item {
+    color: white;
 }
 
-.btn-primary {
-    font-size: 0.875rem; /* Ajusta el tamaño del botón de "Iniciar Sesión" */
+.dropdown-item:hover {
+    background-color: #444;
 }
 
-/* Responsivo */
-@media (max-width: 768px) {
-    .custom-navbar .navbar-nav {
-        flex-direction: column;
-        gap: 10px;
-    }
+
+/* Ajustar el contenedor de búsqueda */
+.search-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-right: 10px; /* Espacio entre el input y el avatar */
 }
+
+/* Icono de búsqueda */
+.search-icon {
+    color: white;
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.search-icon:hover {
+    color: #f78c1e;
+}
+   
+/* Input de búsqueda (oculto por defecto) */
+/* Ocultar el input completamente cuando no esté activo */
+.search-input {
+    width: 0;
+    opacity: 0;
+    padding: 0;
+    border: none;
+    outline: none;
+    background-color: #222;
+    color: white;
+    transition: all 0.3s ease-in-out;
+    position: absolute;
+    right: 0;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+    visibility: hidden; /* Esta línea evita que siga ocupando espacio */
+}
+
+/* Mostrar input cuando la búsqueda está activa */
+.search-container.active .search-input {
+    width: 200px;
+    opacity: 1;
+    padding: 5px 10px;
+    visibility: visible; /* Ahora se muestra bien */
+}
+

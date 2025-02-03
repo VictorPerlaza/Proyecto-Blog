@@ -42,7 +42,7 @@ class Tag(models.Model):
 
 
 class Post(models.Model):
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=80)
     content = models.TextField()
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
